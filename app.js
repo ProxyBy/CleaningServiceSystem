@@ -7,6 +7,7 @@ const bdConfig = require('./config/bdConfig');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const users = require('./routes/users');
+const passport = require('passport');
 
 
 const app = express();
@@ -26,7 +27,18 @@ mongoose.connection.on('error', (err) => {
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
+
 app.use('/users', users);
+
+
+
+
+
 
 
 

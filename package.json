@@ -8,15 +8,16 @@
     "start": "node app"
   },
   "dependencies": {
-    "express": "*",
-    "mongoose": "*",
+    "@angular/cli": "^1.5.0",
     "bcryptjs": "*",
-    "cors": "*",
-    "jsonwebtoken": "*",
     "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "nconf": "^0.8.5",
     "passport": "*",
-    "passport-jwt": "*",
-    "nconf": "^0.8.5"
+    "passport-jwt": "*"
   },
   "author": "Misha Seregin",
   "license": "ISC"
