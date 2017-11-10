@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/bdConfig');
 
-const UserSchema = mongoose.Schema({
+const UsersbSchema = mongoose.Schema({
     name: {
        type: String
     },
@@ -20,16 +20,20 @@ const UserSchema = mongoose.Schema({
     }
 });
 
-const User = module.exports = mongoose.model('User', UserSchema);
+const User = module.exports = mongoose.model('user', UsersbSchema);
 
 module.exports.getUserById = function(id, callback){
     User.findById(id, callback);
-}
+};
+
+module.exports.getUsers = function(callback){
+    User.find({},{}, callback);
+};
 
 module.exports.getUserByUsername = function(username, callback){
     const query = {username: username}
     User.findOne(query, callback);
-}
+};
 
 module.exports.addUser = function(newUser, callback){
     bcrypt.genSalt(10, (err, salt) => {
@@ -39,11 +43,11 @@ module.exports.addUser = function(newUser, callback){
             newUser.save(callback);
         });
     });
-}
+};
 
 module.exports.comparePassword = function(condidatePassword, hash, callback) {
     bcrypt.compare(condidatePassword, hash, (err, isMatch) => {
         if(err) throw err;
         callback(null, isMatch);
     });
-}
+};

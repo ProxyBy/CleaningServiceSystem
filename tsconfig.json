@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "noImplicitAny": true
+    },
+    "include": [
+        "**/*.ts"
+    ],
+    "exclude": [
+        "bin",
+        "node_modules",
+        "typings",
+        "angular-src"
+    ],
+    "lib": [
+        "es6",
+        "dom"
+    ],
+    "types": [
+        "node"
+    ],
+    "typeRoots": [
+        "../node_modules/@types"
+    ]
+}

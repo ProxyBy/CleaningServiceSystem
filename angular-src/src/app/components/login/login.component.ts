@@ -31,10 +31,10 @@ export class LoginComponent implements OnInit {
       if(data.success){
         this.authService.storeUserData(data.token, data.user);
         this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
-        this.router.navigate('dashboard')
+        this.router.navigate(['/dashboard']);
       } else {
         this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
-        this.router.navigate('login');
+        this.router.navigate(['/login']);
       }
     });
   }

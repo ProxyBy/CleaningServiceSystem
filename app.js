@@ -34,14 +34,6 @@ app.use(passport.session());
 require('./config/passport')(passport);
 require('./routes/index')(app);
 
-//app.use('/users', users);
-
-
-
-
-
-
-
 //Error handler
 app.use(function (err, req, res, next) {
     //MODE_ENW

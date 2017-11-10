@@ -17,8 +17,12 @@
     "mongoose": "*",
     "nconf": "^0.8.5",
     "passport": "*",
-    "passport-jwt": "*"
+    "passport-jwt": "*",
+    "connect-multiparty": "^2.0.0"
   },
   "author": "Misha Seregin",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^8.0.50"
+  }
 }

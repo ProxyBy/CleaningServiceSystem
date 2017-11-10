@@ -1,8 +1,6 @@
-const multipart = require('connect-multiparty');
-const multipartMiddleware = multipart();
-
 import {IRoute} from './IRoute';
 import {CONTROLLERS} from "./controllers";
+
 let userController = CONTROLLERS.user;
 let loginController = CONTROLLERS.login;
 
@@ -19,6 +17,13 @@ export const routesV1: IRoute[] = [
         httpMethod: 'POST',
         middleware: [
             loginController.login
+        ]
+    },
+    {
+        path: '/users',
+        httpMethod: 'GET',
+        middleware: [
+            userController.getAllUsers
         ]
     }
 ];
