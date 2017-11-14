@@ -27,7 +27,7 @@ class UserController {
         this.getAllUsers = (req, res) => {
             User.getUsers((err, users) => {
                 if (err) {
-                    res.json({ success: false, msg: 'Fail to register user' });
+                    res.json({ success: false, msg: 'Fail to get users' });
                 }
                 else {
                     res.json({ success: true, users: users });

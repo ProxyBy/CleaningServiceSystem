@@ -18,7 +18,8 @@
     "nconf": "^0.8.5",
     "passport": "*",
     "passport-jwt": "*",
-    "connect-multiparty": "^2.0.0"
+    "connect-multiparty": "^2.0.0",
+    "multer": "1.1.0"
   },
   "author": "Misha Seregin",
   "license": "ISC",

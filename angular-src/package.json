@@ -24,6 +24,8 @@
     "angular2-flash-messages": "^1.0.8",
     "angular2-jwt": "^0.2.3",
     "core-js": "^2.4.1",
+    "ng2-file-upload": "^1.2.1",
+    "ng2-simple-timepicker": "^0.1.11",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
   },

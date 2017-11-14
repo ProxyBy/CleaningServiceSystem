@@ -24,12 +24,12 @@ export class UserController {
                 res.json({success: true, msg: 'User registered'})
             }
         });
-    }
+    };
 
     public getAllUsers: Function = (req: Request, res: Response) => {
         User.getUsers((err: any, users: any) => {
             if(err){
-                res.json({success: false, msg:'Fail to register user'});
+                res.json({success: false, msg:'Fail to get users'});
             } else {
                 res.json({success: true, users: users})
             }
