@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/bdConfig');
 class LoginController {
     constructor() {
-        this.login = (req, res) => {
+        this.auth = (req, res) => {
             const username = req.body.username;
             const password = req.body.password;
             User.getUserByUsername(username, (err, user) => {
@@ -31,7 +31,8 @@ class LoginController {
                                 id: user._id,
                                 name: user.name,
                                 username: user.username,
-                                email: user.email
+                                email: user.email,
+                                role: user.role
                             }
                         });
                     }

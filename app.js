@@ -9,7 +9,6 @@ const mongoose = require('mongoose');
 const users = require('./routes/users');
 const passport = require('passport');
 
-
 const app = express();
 app.set('port', config.get('port'));
 http.createServer(app).listen(app.get('port'), function(){

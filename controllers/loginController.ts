@@ -10,7 +10,7 @@ const config = require('../config/bdConfig');
 
 export class LoginController {
 
-    public login: Function = (req: Request, res: Response) => {
+    public auth: Function = (req: Request, res: Response) => {
         const username = req.body.username;
         const password = req.body.password;
 
@@ -33,7 +33,8 @@ export class LoginController {
                             id: user._id,
                             name: user.name,
                             username: user.username,
-                            email: user.email
+                            email: user.email,
+                            role: user.role
                         }
                     });
                 } else {

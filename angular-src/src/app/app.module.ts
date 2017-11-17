@@ -13,7 +13,7 @@ import { ValidateService } from "./services/validate.service";
 import { AuthService } from "./services/auth.service";
 import { FlashMessagesModule } from "angular2-flash-messages";
 import { HttpModule} from "@angular/http";
-import { AuthGuard} from "./guards/auth.guard";
+//import { AuthGuard} from "./guards/auth.guard";
 import { UserComponent } from './components/user/user.component';
 import { UserService } from "./services/user.service";
 import { CompanyService } from "./services/company.service";
@@ -33,7 +33,8 @@ const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
+//  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { roles: ['user']}},
+  {path: 'dashboard', component: DashboardComponent},
 //  {path: 'profile', component: ProfileComponent, canActivate:[AuthGuard]},
   {path: 'companyList', component: CompanyListComponent},
   {path: 'companyRegister', component: CompanyRegisterComponent},
@@ -74,7 +75,7 @@ const appRoutes: Routes = [
   providers: [
     ValidateService,
     AuthService,
-    AuthGuard,
+ //   AuthGuard,
     UserService,
     CompanyService,
     CleaningTypeService,

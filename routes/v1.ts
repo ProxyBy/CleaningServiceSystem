@@ -19,7 +19,7 @@ export const routesV1: IRoute[] = [
         path: '/authenticate',
         httpMethod: 'POST',
         middleware: [
-            loginController.login
+            loginController.auth
         ]
     },
     {
@@ -37,10 +37,11 @@ export const routesV1: IRoute[] = [
         ]
     },
     {
-        path: '/registercompany',
+        path: '/registerCompany',
         httpMethod: 'POST',
         middleware: [
-            companyController.register, serviceOfCompanyController.addServicesOfCompany
+            companyController.register
+           // serviceOfCompanyController.addServicesOfCompany
         ]
     },
     {
@@ -55,6 +56,22 @@ export const routesV1: IRoute[] = [
         httpMethod: 'POST',
         middleware: [
             cleaningTypeController.addCleaningType
+        ]
+    },
+    {
+        path: '/companyParametrizedList',
+        httpMethod: 'POST',
+        middleware: [
+            companyController.getCompanyParametrizedList
+        ]
+    },
+    {
+        path: '/a',
+        httpMethod: 'GET',
+        middleware: [
+            userController.checkAuthentication
+           // userController.auth,
+          //  userController.getProfile
         ]
     }
 

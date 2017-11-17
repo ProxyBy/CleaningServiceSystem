@@ -23,7 +23,7 @@
   <div class="form-group">
     <label>Service type</label>
     <div *ngFor="let ser of cleaningTypes">
-      <label><input type="checkbox" (change)="addType(ser.id, $event.target.checked)" name="selectedType">{{ser.name}}</label>
+      <label><input type="checkbox" (change)="addType(ser._id, $event.target.checked)" name="selectedType">{{ser.name}}</label>
     </div>
   </div>
   <div class="form-group">

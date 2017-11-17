@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const config = require('../config/bdConfig');
 
 const CleaningTypeSchema = mongoose.Schema({
-    id: {
+    _id: {
         type: Number
     },
     name: {

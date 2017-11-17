@@ -21,8 +21,8 @@ export class ValidateService {
     if (company.logo == undefined
       || company.name == undefined
       || company.description == undefined
-      || company.serviceTypes == undefined
-      || company.serviceTypes.length == 0
+      || company.cleaningTypes == undefined
+      || company.cleaningTypes.length == 0
       || company.password == undefined
       || company.email == undefined) {
       return false;

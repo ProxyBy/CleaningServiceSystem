@@ -9,7 +9,7 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./company-parametrized-list.component.css']
 })
 export class CompanyParametrizedListComponent implements OnInit {
-  companies;
+  companies: any[] = [];
 
   constructor(
     private companyService: CompanyService,
@@ -29,5 +29,4 @@ export class CompanyParametrizedListComponent implements OnInit {
     });
   }
 }
-
 

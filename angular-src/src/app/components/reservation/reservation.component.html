@@ -7,7 +7,7 @@
   <div class="form-group">
     <label>Type of cleaning</label>
       <select [(ngModel)]="cleaningRequest.selectedType" [ngModelOptions]="{standalone: true}">
-      <option *ngFor="let cleaningType of cleaningTypes" [ngValue]="cleaningType.name">{{cleaningType.name}}</option>
+      <option *ngFor="let cleaningType of cleaningTypes" [ngValue]="cleaningType._id">{{cleaningType.name}}</option>
     </select>
   </div>
   <div class="form-group">

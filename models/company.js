@@ -19,12 +19,17 @@ const CompanySchema = mongoose.Schema({
     password: {
         type: String,
         requered: true
-    }
+    },
+    cleaningType: [{
+        type: Number,
+        ref: "cleaningtype"
+    }]
 });
 
 const Company = module.exports = mongoose.model('company', CompanySchema);
 
 module.exports.addCompany = function(newCompany, callback){
+
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newCompany.password, salt, (err, hash) => {
             if(err) throw err;
@@ -38,3 +43,6 @@ module.exports.getCompany = function(callback){
     Company.find({},{}, callback);
 };
 
+module.exports.getParametrizedCompany = function(criteria, callback){
+    Company.find({cleaningType: criteria.cleaningType}).populate('cleaningType', { name: 1, _id: 0}).exec(callback);
+};

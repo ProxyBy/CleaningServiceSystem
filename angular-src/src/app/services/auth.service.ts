@@ -8,7 +8,9 @@ export class AuthService {
   authToken: any;
   user: any;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    this.user = localStorage.getItem('user');
+  }
 
   registerUser(user){
     let headers = new Headers();
@@ -20,14 +22,14 @@ export class AuthService {
   registerCompany(company){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/registercompany', company, {headers: headers})
+    return this.http.post('http://localhost:3000/registerCompany', company, {headers: headers})
       .map(res => res.json());
   }
 
   authenticateUser(user){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/users/authenticate', user, {headers: headers})
+    return this.http.post('http://localhost:3000/authenticate', user, {headers: headers})
       .map(res => res.json());
   }
 
@@ -53,12 +55,16 @@ export class AuthService {
       .map(res => res.json());
   }
 
-  loggedIn(){
-    return tokenNotExpired();
-  }
-
   loadToken(){
     const token = localStorage.getItem('id_token');
     this.authToken = token;
+  }
+
+  loggedIn(){
+    return tokenNotExpired('id_token');
+  }
+
+  getUser(){
+    this.user = localStorage.getItem('user');
   }
 }

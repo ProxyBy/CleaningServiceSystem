@@ -53,7 +53,7 @@ export class CompanyRegisterComponent implements OnInit {
       name: this.name,
       description: this.description,
       email: this.email,
-      serviceTypes: this.selectedTypes,
+      cleaningTypes: this.selectedTypes,
       password: this.password
     };
 
@@ -74,7 +74,7 @@ export class CompanyRegisterComponent implements OnInit {
         this.router.navigate(['/login']);
       } else {
         this.flashMessageService.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
-        this.router.navigate(['/registercompany'])
+        this.router.navigate(['/companyRegister'])
       }
     })
 

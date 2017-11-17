@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 import { Router } from '@angular/router';
 import { FlashMessagesService } from "angular2-flash-messages";
@@ -11,6 +11,7 @@ import { FlashMessagesService } from "angular2-flash-messages";
 })
 export class NavbarComponent implements OnInit {
 
+
   constructor(
     private authService: AuthService,
     private flashMessagesService: FlashMessagesService,
@@ -18,6 +19,10 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.role = this.authService.user.role;
+
+     console.log(this.authService.user);
+    //authService.user.role
   }
 
   onLogoutClick(){

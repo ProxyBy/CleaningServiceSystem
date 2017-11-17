@@ -10,12 +10,14 @@ const config = require('../config/bdConfig');
 
 export class CompanyController {
     public register: Function = (req: Request, res: Response, next: Function) => {
+
         var newCompany = new Company({
             logo: req.body.logo,
             name: req.body.name,
             description: req.body.description,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            cleaningType: req.body.cleaningTypes
         });
 
         Company.addCompany(newCompany, (err: any, company: any) => {
@@ -23,8 +25,6 @@ export class CompanyController {
                 res.json({success: false, msg:'Fail to register cleaning company'});
             } else {
                 res.json({success: true, msg: 'Cleaning company registered'});
-                console.log("ready");
-                next()
             }
         });
 
@@ -38,5 +38,19 @@ export class CompanyController {
                 res.json({success: true, company: company})
             }
         });
-    }
+    };
+
+    public getCompanyParametrizedList: Function = (req: Request, res: Response) => {
+        var criteria = {
+            cleaningType: req.body.selectedType
+        };
+        Company.getParametrizedCompany(criteria, (err: any, company: any) => {
+            if(err){
+                res.json({success: false, msg:'Fail to get cleaning company'});
+            } else {
+                console.log(company.toString());
+                res.json({success: true, company: company})
+            }
+        });
+    };
 };
