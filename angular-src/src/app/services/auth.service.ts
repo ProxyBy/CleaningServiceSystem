@@ -5,11 +5,10 @@ import {tokenNotExpired} from "angular2-jwt";
 
 @Injectable()
 export class AuthService {
-  authToken: any;
-  user: any;
+ // authToken: any;
+//  user: any;
 
   constructor(private http: Http) {
-    this.user = localStorage.getItem('user');
   }
 
   registerUser(user){
@@ -36,35 +35,40 @@ export class AuthService {
   storeUserData(token, user){
     localStorage.setItem('id_token', token);
     localStorage.setItem('user', JSON.stringify(user));
-    this.authToken = token;
-    this.user = user;
+    localStorage.setItem('role', user.role);
+//    this.authToken = token;
+//    this.user = user;
   }
 
   logout(){
-    this.authToken = null;
-    this.user = null;
+//    this.authToken = null;
+//    this.user = null;
     localStorage.clear();
   }
 
-  getProfile(){
+/*  getProfile(){
     let headers = new Headers();
-    this.loadToken();
+    //this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
     return this.http.get('http://localhost:3000/users/profile', {headers: headers})
       .map(res => res.json());
-  }
-
-  loadToken(){
-    const token = localStorage.getItem('id_token');
-    this.authToken = token;
-  }
+  }*/
 
   loggedIn(){
     return tokenNotExpired('id_token');
   }
 
   getUser(){
-    this.user = localStorage.getItem('user');
+    return localStorage.getItem('user');
   }
+
+  getRole() {
+    return localStorage.getItem('role');
+  }
+
+  getToken(){
+    return localStorage.getItem('id_token');
+  }
+
 }

@@ -9,17 +9,18 @@
   },
   "dependencies": {
     "@angular/cli": "^1.5.0",
+    "@types/express": "^4.0.39",
     "bcryptjs": "*",
     "body-parser": "*",
+    "connect-multiparty": "^2.0.0",
     "cors": "*",
     "express": "*",
     "jsonwebtoken": "*",
     "mongoose": "*",
+    "multer": "1.1.0",
     "nconf": "^0.8.5",
     "passport": "*",
-    "passport-jwt": "^2.2.1",
-    "connect-multiparty": "^2.0.0",
-    "multer": "1.1.0"
+    "passport-jwt": "^2.2.1"
   },
   "author": "Misha Seregin",
   "license": "ISC",

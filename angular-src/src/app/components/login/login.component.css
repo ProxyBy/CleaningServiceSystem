@@ -1,0 +1,11 @@
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 50%;
+  margin: 3% auto;
+}
+
+.flex-element {
+  flex-grow: 1;
+}

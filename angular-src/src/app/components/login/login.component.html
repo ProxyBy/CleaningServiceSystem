@@ -1,5 +1,6 @@
-<h2 class="page-header">Login</h2>
-<form (submit)="onLoginSubmit()">
+<div class="flex-container">
+<form class="flex-element" (submit)="onLoginSubmit()">
+  <h2 class="page-header">Login</h2>
   <div class="form-group">
     <label>Username</label>
     <input type="text" class="form-control" [(ngModel)]="username" name="username">
@@ -10,3 +11,4 @@
   </div>
   <input type="submit" class="btn btn-primary" value="Login">
 </form>
+</div>

@@ -1,15 +1,8 @@
-<table>
-  <tr>
-    <td>
-      <div>
-        <app-navbar></app-navbar>
-      </div>
-    </td>
-    <td>
-      <div class="container">
-        <flash-messages></flash-messages>
-        <router-outlet></router-outlet>
-      </div>
-    </td>
-  </tr>
-</table>
+<app-navbar></app-navbar>
+<div class="main-table">
+  <div class="message"><flash-messages></flash-messages></div>
+  <div><router-outlet></router-outlet></div>
+</div>
+
+
+

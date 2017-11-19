@@ -10,7 +10,13 @@ import { FlashMessagesService } from "angular2-flash-messages";
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  private adminPages = [
+    "users"
+  ];
 
+  private userPages = [
+    "company"
+  ];
 
   constructor(
     private authService: AuthService,
@@ -21,15 +27,27 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     // this.role = this.authService.user.role;
 
-     console.log(this.authService.user);
+     console.log(this.authService.getUser());
     //authService.user.role
   }
 
   onLogoutClick(){
     this.authService.logout();
-    this.flashMessagesService.show('You are logout', {cssclass: 'alert-success', timeout: 3000});
+
+    this.flashMessagesService.show('You are logout', {cssClass: 'alert-success', timeout: 3000});
     this.router.navigate(['/login']);
     return false;
   }
 
+  isAvailablePage(page){
+    let role = this.authService.getRole();
+    let i = this.adminPages.indexOf(page);
+    if(role == "admin" && this.adminPages.indexOf(page)!= -1){
+      return true;
+    }
+    if(role == "user" && this.userPages.indexOf(page)!= -1){
+      return true;
+    }
+    return false;
+  }
 }
