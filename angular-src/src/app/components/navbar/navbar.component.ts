@@ -25,15 +25,10 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.role = this.authService.user.role;
-
-     console.log(this.authService.getUser());
-    //authService.user.role
   }
 
   onLogoutClick(){
     this.authService.logout();
-
     this.flashMessagesService.show('You are logout', {cssClass: 'alert-success', timeout: 3000});
     this.router.navigate(['/login']);
     return false;
@@ -41,7 +36,6 @@ export class NavbarComponent implements OnInit {
 
   isAvailablePage(page){
     let role = this.authService.getRole();
-    let i = this.adminPages.indexOf(page);
     if(role == "admin" && this.adminPages.indexOf(page)!= -1){
       return true;
     }

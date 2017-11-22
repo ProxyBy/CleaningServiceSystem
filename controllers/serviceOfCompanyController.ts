@@ -1,3 +1,4 @@
+//TODO Delete all file
 import {Request, Response} from 'express';
 
 const ServiceOfCompany = require('../models/serviceOfCompany');

@@ -1,5 +1,6 @@
-<h2 class="page-header">Register cleaning service</h2>
-<form (submit)="onRegisterSubmit()">
+<div class="flex-container">
+<form class="flex-element" (submit)="onRegisterSubmit()">
+  <h2 class="page-header">Register cleaning service</h2>
   <div class="form-group">
     <label>Logo</label>
     <input type="text" [(ngModel)]="logo" name="logo" class="form-control">
@@ -21,14 +22,31 @@
     <input type="text" [(ngModel)]="email" name="email" class="form-control">
   </div>
   <div class="form-group">
-    <label>Service type</label>
+    <label>Service type:</label>
     <div *ngFor="let ser of cleaningTypes">
       <label><input type="checkbox" (change)="addType(ser._id, $event.target.checked)" name="selectedType">{{ser.name}}</label>
     </div>
   </div>
   <div class="form-group">
-    <label>Password</label>
-    <input type="text" [(ngModel)]="password" name="password" class="form-control">
+    <label>Coefficients:</label>
+    <div *ngFor="let cleaningType of cleaningTypes">
+      <label *ngIf="isInSelectedArray(cleaningType._id)"><input type="text" (change)="addCoefficient(cleaningType._id, $event.target.value)" name="coefficient">{{cleaningType.name}}</label>
+    </div>
   </div>
-  <input type="submit" class="btn btn-primary" value="Submit">
+  <div class="form-group">
+    <label>Prices of room types:</label>
+    <div *ngFor="let room of roomTypes">
+      <label><input type="text" (change)="addRoomPrice(room._id, $event.target.value)" name="roomPrice">{{room.name}}</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" [(ngModel)]="password" name="password" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Confirm password</label>
+    <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" class="form-control">
+  </div>
+  <input type="submit" class="btn btn-primary" value="Register">
 </form>
+</div>

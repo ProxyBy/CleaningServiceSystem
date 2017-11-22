@@ -36,6 +36,23 @@ db.cleaningtypes.insert(
    }]
 )
 
+
+// list of room type
+db.roomtypes.insert(
+   [{
+      "_id" : 1,
+      "name" : "Standard room"
+   },
+   {
+      "_id" : 2,
+      "name" : "Large room"
+   },
+   {
+      "_id" : 3,
+      "name" : "WC"
+   }]
+)
+
 // add admin  pass= m
 db.users.insert(
    [{

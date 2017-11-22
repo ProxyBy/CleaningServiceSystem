@@ -6,6 +6,7 @@ let loginController = CONTROLLERS.login;
 let companyController = CONTROLLERS.company;
 let cleaningTypeController = CONTROLLERS.cleaningType;
 let serviceOfCompanyController = CONTROLLERS.serviceOfCompany;
+let roomTypeController = CONTROLLERS.roomTypeController;
 
 export const routesV1: IRoute[] = [
     {
@@ -49,6 +50,13 @@ export const routesV1: IRoute[] = [
         httpMethod: 'GET',
         middleware: [
             cleaningTypeController.getCleaningTypes
+        ]
+    },
+    {
+        path: '/roomTypes',
+        httpMethod: 'GET',
+        middleware: [
+           roomTypeController.getRoomTypes
         ]
     },
     {

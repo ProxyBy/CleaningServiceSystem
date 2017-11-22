@@ -17,9 +17,9 @@ export class CompanyController {
             description: req.body.description,
             email: req.body.email,
             password: req.body.password,
-            cleaningType: req.body.cleaningTypes
+            cleaningType: req.body.cleaningTypes,
+            roomPrice: req.body.roomPrices
         });
-
         Company.addCompany(newCompany, (err: any, company: any) => {
             if(err){
                 res.json({success: false, msg:'Fail to register cleaning company'});

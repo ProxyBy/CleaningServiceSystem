@@ -3,23 +3,23 @@ const bcrypt = require('bcryptjs');
 const config = require('../config/bdConfig');
 
 const UsersSchema = mongoose.Schema({
-    name: {
-       type: String
-    },
-    email: {
-        type: String,
-        required: true
-    },
     username: {
         type: String,
         requered: true
+    },
+    email: {
+        type: String
+    },
+    phone: {
+        type: String
     },
     password: {
         type: String,
         requered: true
     },
     role: {
-        type: String
+        type: String,
+        requered: true
     }
 });
 
@@ -33,8 +33,13 @@ module.exports.getUsers = function(callback){
     User.find({},{}, callback);
 };
 
-module.exports.getUserByUsername = function(username, callback){
-    const query = {username: username}
+module.exports.getUserByEmail = function(email, callback){
+    const query = {email: email}
+    User.findOne(query, callback);
+};
+
+module.exports.getUserByPhone = function(phone, callback){
+    const query = {phone: phone}
     User.findOne(query, callback);
 };
 

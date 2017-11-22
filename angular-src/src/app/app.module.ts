@@ -27,6 +27,8 @@ import { CompanyListComponent } from "./components/company-list/company-list.com
 import { CompanyAvailableListComponent } from "./components/company-available-list/company-available-list.component";
 import { CompanyRegisterComponent } from "./components/company-register/company-register.component";
 import { CompanyInfoComponent} from "./components/company-info/company-info.component";
+import {RoomTypeService} from "./services/room-type.service";
+import {ProfileComponent} from "./components/profile/profile.component";
 
 
 const appRoutes: Routes = [
@@ -35,7 +37,7 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
 //  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { roles: ['user']}},
   {path: 'dashboard', component: DashboardComponent},
-//  {path: 'profile', component: ProfileComponent, canActivate:[AuthGuard]},
+  {path: 'profile', component: ProfileComponent},
   {path: 'companyList', component: CompanyListComponent},
   {path: 'companyRegister', component: CompanyRegisterComponent},
   {path: 'users', component: UserComponent},
@@ -62,7 +64,8 @@ const appRoutes: Routes = [
     CompanyParametrizedListComponent,
     CompanyListComponent,
     CompanyInfoComponent,
-    CompanyAvailableListComponent
+    CompanyAvailableListComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,8 @@ const appRoutes: Routes = [
     UserService,
     CompanyService,
     CleaningTypeService,
-    ReservationService
+    ReservationService,
+    RoomTypeService
   ],
   bootstrap: [
     AppComponent

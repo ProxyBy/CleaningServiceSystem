@@ -20,10 +20,27 @@ const CompanySchema = mongoose.Schema({
         type: String,
         requered: true
     },
-    cleaningType: [{
-        type: Number,
-        ref: "cleaningtype"
-    }]
+    cleaningType: [
+        {
+            typeId: {
+                type: Number,
+                ref: "cleaningtype"
+            },
+            coefficient: {
+                type: Number
+            }
+        }],
+    roomPrice: [
+        {
+            typeId: {
+                type: Number,
+                ref: "roomtype"
+            },
+            price: {
+                type: Number
+            }
+        }]
+
 });
 
 const Company = module.exports = mongoose.model('company', CompanySchema);
@@ -44,5 +61,5 @@ module.exports.getCompany = function(callback){
 };
 
 module.exports.getParametrizedCompany = function(criteria, callback){
-    Company.find({cleaningType: criteria.cleaningType}).populate('cleaningType', { name: 1, _id: 0}).exec(callback);
+    Company.find({'cleaningType.typeId': criteria.cleaningType}).populate('cleaningType', { name: 1, _id: 0}).exec(callback);
 };

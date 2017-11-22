@@ -74,9 +74,9 @@ export class UserController {
 
     public register: Function = (req: Request, res: Response) => {
         var newUser = new User({
-            name: req.body.name,
-            email: req.body.email,
             username: req.body.username,
+            email: req.body.email,
+            phone: req.body.phone,
             password: req.body.password,
             role: "user"
         });

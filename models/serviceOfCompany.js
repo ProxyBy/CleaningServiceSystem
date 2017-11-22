@@ -1,3 +1,4 @@
+//TODO Delete class
 const mongoose = require('mongoose');
 
 const ServiceOfCompanySchema = mongoose.Schema({

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 import { Router } from '@angular/router';
 import { FlashMessagesService } from "angular2-flash-messages";
+import {ValidateService} from "../../services/validate.service";
+import {identifierName} from "@angular/compiler";
 
 @Component({
   selector: 'app-login',
@@ -9,22 +11,35 @@ import { FlashMessagesService } from "angular2-flash-messages";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  username: String;
+  identifier: String;
   password: String;
 
   constructor(
     private authService: AuthService,
     private flashMessagesService: FlashMessagesService,
-    private router: Router
+    private router: Router,
+    private validateService: ValidateService
     ) { }
 
   ngOnInit() {
   }
 
   onLoginSubmit(){
-    const user = {
-      username: this.username,
-      password: this.password
+    if(this.validateService.validateEmail(this.identifier)){
+      const user = {
+        email: this.identifier,
+        password: this.password
+      }
+    }
+    if(this.validateService.validatePhone(this.identifier)){
+      const user = {
+        phone: this.identifier,
+        password: this.password
+      }
+    }
+    if(!this.validateService.validateEmail(this.identifier) && !this.validateService.validatePhone(this.identifier)){
+      this.flashMessagesService.show('Please fill valid phone number or email', {cssClass: 'alert-danger', timeout: 3000});
+      return false;
     }
 
     this.authService.authenticateUser(user).subscribe(data => {
