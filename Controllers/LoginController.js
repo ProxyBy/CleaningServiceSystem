@@ -60,7 +60,8 @@ class LoginController {
                                     id: user._id,
                                     username: user.username,
                                     role: user.role
-                                }
+                                },
+                                msg: "Hello " + user.username + " (" + user.role + ")"
                             });
                         }
                         else {
@@ -90,7 +91,8 @@ class LoginController {
                                     id: user._id,
                                     username: user.username,
                                     role: user.role
-                                }
+                                },
+                                msg: "Hello " + user.username + " (" + user.role + ")"
                             });
                         }
                         else {
