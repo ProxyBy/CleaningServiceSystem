@@ -1,4 +1,5 @@
 import {Request, Response} from 'express';
+import {Schema} from "inspector";
 
 const User = require('../models/user');
 const express = require('express');
@@ -20,21 +21,16 @@ const jwtOptions = {
     secretOrKey: "yousecret"//auth.jwtSecret
 };
 
-export class UserController {
+export class CustomerController {
     constructor(){
-
         passport.use(new JwtStrategy(jwtOptions, (jwt_payload: any, done: any) => {
-            console.log("0");
             User.findOne({id: jwt_payload.sub}, (err: any, user: any) => {
                 if(err){
-                    console.log("1");
                     return done(err, false);
                 }
                 if(user){
-                    console.log("2");
                     return done(null, user);
                 } else {
-                    console.log("3");
                     return done(null, false);
                 }
             });
@@ -43,6 +39,41 @@ export class UserController {
  //       passport.use(new JwtStrategy(jwtOptions, (payload: any, done: Function) => done(null, payload)));
     }
 
+    public register: Function = (req: Request, res: Response) => {
+        var newUser = new User({
+            password: req.body.password,
+            username: req.body.username,
+            email: req.body.email,
+            phone: req.body.phone,
+            role: req.body.role
+        });
+
+        User.addUser(newUser, (err: any, user: any) => {
+            if(err){
+                res.json({success: false, msg:'Fail to register user'});
+            } else {
+                res.json({success: true, msg: 'User registered'})
+            }
+        });
+    };
+
+    public saveUpdatedProfile: Function = (password: any, req: Request, res: Response) => {
+        var newUser = new User({
+            _id: req.body._id,
+            password: password,
+            username: req.body.username,
+            email: req.body.email,
+            phone: req.body.phone,
+            role: req.body.role
+        });
+        User.updateCustomer(newUser, (err: any, user: any) => {
+            if(err){
+                res.json({success: false, msg:'Fail to update user'});
+            } else {
+                res.json({success: true, msg:'Your profile has been updated'});
+            }
+        });
+    };
 
 
     public checkAuthentication: Function =
@@ -72,23 +103,7 @@ export class UserController {
             })(req, res, next)
         };
 
-    public register: Function = (req: Request, res: Response) => {
-        var newUser = new User({
-            username: req.body.username,
-            email: req.body.email,
-            phone: req.body.phone,
-            password: req.body.password,
-            role: "user"
-        });
 
-        User.addUser(newUser, (err: any, user: any) => {
-            if(err){
-                res.json({success: false, msg:'Fail to register user'});
-            } else {
-                res.json({success: true, msg: 'User registered'})
-            }
-        });
-    };
 
     public getAllUsers: Function = (req: Request, res: Response) => {
         User.getUsers((err: any, users: any) => {
@@ -107,12 +122,7 @@ export class UserController {
         res.json({user: req.user});
     };*/
 
-    public getProfile: Function = (req: Request, res: Response) => {
-        console.log("getProfile");
-        passport.authenticate('jwt', {session: false});
-     //   res.json({user: req.user});
-        res.json({message: "Success! You can not see this without a token"});
-    };
+
 
 
 

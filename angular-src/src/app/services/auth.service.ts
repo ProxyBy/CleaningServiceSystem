@@ -5,8 +5,6 @@ import {tokenNotExpired} from "angular2-jwt";
 
 @Injectable()
 export class AuthService {
- // authToken: any;
-//  user: any;
 
   constructor(private http: Http) {
   }
@@ -34,41 +32,41 @@ export class AuthService {
 
   storeUserData(token, user){
     localStorage.setItem('id_token', token);
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user_id', user.id);
     localStorage.setItem('role', user.role);
-//    this.authToken = token;
-//    this.user = user;
   }
 
   logout(){
-//    this.authToken = null;
-//    this.user = null;
     localStorage.clear();
   }
 
-/*  getProfile(){
-    let headers = new Headers();
-    //this.loadToken();
-    headers.append('Authorization', this.authToken);
-    headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/users/profile', {headers: headers})
-      .map(res => res.json());
-  }*/
-
   loggedIn(){
     return tokenNotExpired('id_token');
-  }
-
-  getUser(){
-    return localStorage.getItem('user');
   }
 
   getRole() {
     return localStorage.getItem('role');
   }
 
-  getToken(){
-    return localStorage.getItem('id_token');
+  getId() {
+    return localStorage.getItem('user_id');
   }
+
+  /*  getUser(){
+    return localStorage.getItem('user');
+  }*/
+
+/*  getToken(){
+    return localStorage.getItem('id_token');
+  }*/
+
+  /*  getProfile(){
+      let headers = new Headers();
+      //this.loadToken();
+      headers.append('Authorization', this.authToken);
+      headers.append('Content-Type', 'application/json');
+      return this.http.get('http://localhost:3000/users/profile', {headers: headers})
+        .map(res => res.json());
+    }*/
 
 }

@@ -14,8 +14,43 @@ const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeader(),
     secretOrKey: "yousecret" //auth.jwtSecret
 };
-class UserController {
+class CustomerController {
     constructor() {
+        this.register = (req, res) => {
+            var newUser = new User({
+                password: req.body.password,
+                username: req.body.username,
+                email: req.body.email,
+                phone: req.body.phone,
+                role: req.body.role
+            });
+            User.addUser(newUser, (err, user) => {
+                if (err) {
+                    res.json({ success: false, msg: 'Fail to register user' });
+                }
+                else {
+                    res.json({ success: true, msg: 'User registered' });
+                }
+            });
+        };
+        this.saveUpdatedProfile = (password, req, res) => {
+            var newUser = new User({
+                _id: req.body._id,
+                password: password,
+                username: req.body.username,
+                email: req.body.email,
+                phone: req.body.phone,
+                role: req.body.role
+            });
+            User.updateCustomer(newUser, (err, user) => {
+                if (err) {
+                    res.json({ success: false, msg: 'Fail to update user' });
+                }
+                else {
+                    res.json({ success: true, msg: 'Your profile has been updated' });
+                }
+            });
+        };
         this.checkAuthentication = (req, res, next) => {
             console.log('Token got with request:');
             console.log(req.header('Authorization'));
@@ -35,23 +70,6 @@ class UserController {
                  }*/
             })(req, res, next);
         };
-        this.register = (req, res) => {
-            var newUser = new User({
-                username: req.body.username,
-                email: req.body.email,
-                phone: req.body.phone,
-                password: req.body.password,
-                role: "user"
-            });
-            User.addUser(newUser, (err, user) => {
-                if (err) {
-                    res.json({ success: false, msg: 'Fail to register user' });
-                }
-                else {
-                    res.json({ success: true, msg: 'User registered' });
-                }
-            });
-        };
         this.getAllUsers = (req, res) => {
             User.getUsers((err, users) => {
                 if (err) {
@@ -67,12 +85,6 @@ class UserController {
                 user = passport.authenticate('jwt', {session: false});
                 res.json({user: req.user});
             };*/
-        this.getProfile = (req, res) => {
-            console.log("getProfile");
-            passport.authenticate('jwt', { session: false });
-            //   res.json({user: req.user});
-            res.json({ message: "Success! You can not see this without a token" });
-        };
         this.loginT = (req, res) => {
             console.log("start");
             console.log(req.headers);
@@ -80,18 +92,14 @@ class UserController {
             console.log("end");
         };
         passport.use(new JwtStrategy(jwtOptions, (jwt_payload, done) => {
-            console.log("0");
             User.findOne({ id: jwt_payload.sub }, (err, user) => {
                 if (err) {
-                    console.log("1");
                     return done(err, false);
                 }
                 if (user) {
-                    console.log("2");
                     return done(null, user);
                 }
                 else {
-                    console.log("3");
                     return done(null, false);
                 }
             });
@@ -99,5 +107,5 @@ class UserController {
         //       passport.use(new JwtStrategy(jwtOptions, (payload: any, done: Function) => done(null, payload)));
     }
 }
-exports.UserController = UserController;
-//# sourceMappingURL=userController.js.map
+exports.CustomerController = CustomerController;
+//# sourceMappingURL=customerController.js.map

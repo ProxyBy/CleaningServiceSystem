@@ -1,17 +1,17 @@
 import {LoginController} from "../controllers/loginController";
-import {UserController} from "../controllers/userController";
+import {CustomerController} from "../controllers/customerController";
 import {LoggerController} from "../controllers/loggerController";
 import {CompanyController} from "../controllers/companyController";
 import {CleaningTypeController} from "../controllers/cleaningTypeController";
-import {ServiceOfCompanyController} from "../controllers/serviceOfCompanyController";
 import {RoomTypeController} from "../controllers/roomTypeController";
+import {ProfileController} from "../controllers/profileController";
 
 export const CONTROLLERS = {
     login: new LoginController(),
-    user: new UserController(),
+    customer: new CustomerController(),
     logger: new LoggerController(),
     company: new CompanyController(),
     cleaningType: new CleaningTypeController(),
-    serviceOfCompany: new ServiceOfCompanyController(),
-    roomTypeController: new RoomTypeController()
+    roomType: new RoomTypeController(),
+    profile: new ProfileController()
 };

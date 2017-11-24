@@ -40,6 +40,20 @@ export class ValidateService {
     }
   }
 
+  validateProfileCompany(company) {
+    if (company.logo == undefined
+      || company.username == undefined
+      || company.description == undefined
+      || company.cleaningTypes == undefined
+      || company.cleaningTypes.length == 0
+      || company.oldPassword == undefined
+      || company.email == undefined) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   validatePassword(user){
     if (user.password != user.confirmPassword){
       return false;

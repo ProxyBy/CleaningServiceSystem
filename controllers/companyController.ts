@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 
-const Company = require('../models/company');
+const User = require('../models/user');
 const express = require('express');
 const multer = require('multer');
 const router = express.Router();
@@ -10,17 +10,17 @@ const config = require('../config/bdConfig');
 
 export class CompanyController {
     public register: Function = (req: Request, res: Response, next: Function) => {
-
-        var newCompany = new Company({
+        var newCompany = new User({
             logo: req.body.logo,
-            name: req.body.name,
+            username: req.body.name,
             description: req.body.description,
             email: req.body.email,
             password: req.body.password,
-            cleaningType: req.body.cleaningTypes,
-            roomPrice: req.body.roomPrices
+            cleaningTypes: req.body.cleaningTypes,
+            roomPrices: req.body.roomPrices,
+            role: req.body.role
         });
-        Company.addCompany(newCompany, (err: any, company: any) => {
+        User.addUser(newCompany, (err: any, company: any) => {
             if(err){
                 res.json({success: false, msg:'Fail to register cleaning company'});
             } else {
@@ -31,7 +31,7 @@ export class CompanyController {
     };
 
     public getAllCompany: Function = (req: Request, res: Response) => {
-        Company.getCompany((err: any, company: any) => {
+        User.getCompany((err: any, company: any) => {
             if(err){
                 res.json({success: false, msg:'Fail to get cleaning company'});
             } else {
@@ -44,12 +44,33 @@ export class CompanyController {
         var criteria = {
             cleaningType: req.body.selectedType
         };
-        Company.getParametrizedCompany(criteria, (err: any, company: any) => {
+        User.getParametrizedCompany(criteria, (err: any, company: any) => {
             if(err){
                 res.json({success: false, msg:'Fail to get cleaning company'});
             } else {
                 console.log(company.toString());
                 res.json({success: true, company: company})
+            }
+        });
+    };
+
+    public saveUpdatedProfile: Function = (req: Request, res: Response) => {
+        var newUser = new User({
+            _id: req.body._id,
+            logo: req.body.logo,
+            username: req.body.username,
+            description: req.body.description,
+            email: req.body.email,
+            password: req.body.password,
+            cleaningTypes: req.body.cleaningTypes,
+            roomPrices: req.body.roomPrices,
+            role: req.body.role
+        });
+        User.updateCompany(newUser, (err: any, user: any) => {
+            if(err){
+                res.json({success: false, msg:'Fail to update user'});
+            } else {
+                res.json({success: true, msg:'Your profile has been updated'});
             }
         });
     };

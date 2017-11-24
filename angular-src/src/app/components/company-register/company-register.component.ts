@@ -84,6 +84,12 @@ export class CompanyRegisterComponent implements OnInit {
   }
 
   addRoomPrice(id, price) {
+    for (let i=0; i < this.roomPrices.length; i++) {
+      if (this.roomPrices[i].typeId == id) {
+        this.roomPrices[i].price = price;
+        return;
+      }
+    }
     this.roomPrice = {
       typeId: id,
       price: price
@@ -100,7 +106,8 @@ export class CompanyRegisterComponent implements OnInit {
       cleaningTypes: this.selectedTypes,
       roomPrices: this.roomPrices,
       password: this.password,
-      confirmPassword: this.confirmPassword
+      confirmPassword: this.confirmPassword,
+      role: "company"
     };
 
     if(!this.validateService.validateRegisterCompany(company)){

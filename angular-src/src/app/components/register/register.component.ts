@@ -33,7 +33,8 @@ export class RegisterComponent implements OnInit {
       email: this.email,
       phone: this.phone,
       password: this.password,
-      confirmPassword: this.confirmPassword
+      confirmPassword: this.confirmPassword,
+      role: "customer"
     };
 
     if(!this.validateService.validateRequiredRegister(user)){

@@ -6,7 +6,6 @@ const config = require('./config');
 const bdConfig = require('./config/bdConfig');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const users = require('./routes/users');
 const passport = require('passport');
 
 const app = express();

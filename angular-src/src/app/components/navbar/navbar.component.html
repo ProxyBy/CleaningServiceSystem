@@ -33,8 +33,11 @@
     <li *ngIf="authService.loggedIn()">
       <a (click)="onLogoutClick()" href="#">Logout</a>
     </li>
-    <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+    <li *ngIf="authService.loggedIn() && isAvailablePage('profile')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
       <a [routerLink]="['/profile']">Profile</a>
+    </li>
+    <li *ngIf="authService.loggedIn() && isAvailablePage('companyProfile')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/companyProfile']">Profile</a>
     </li>
   </ul>
 </header>

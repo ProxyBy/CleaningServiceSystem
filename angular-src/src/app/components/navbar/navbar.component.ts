@@ -15,7 +15,12 @@ export class NavbarComponent implements OnInit {
   ];
 
   private userPages = [
-    "company"
+    "company",
+    "profile"
+  ];
+
+  private companyPages = [
+    "companyProfile"
   ];
 
   constructor(
@@ -39,7 +44,10 @@ export class NavbarComponent implements OnInit {
     if(role == "admin" && this.adminPages.indexOf(page)!= -1){
       return true;
     }
-    if(role == "user" && this.userPages.indexOf(page)!= -1){
+    if(role == "customer" && this.userPages.indexOf(page)!= -1){
+      return true;
+    }
+    if(role == "company" && this.companyPages.indexOf(page)!= -1){
       return true;
     }
     return false;

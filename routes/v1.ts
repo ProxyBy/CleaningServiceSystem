@@ -1,19 +1,49 @@
 import {IRoute} from './IRoute';
 import {CONTROLLERS} from "./controllers";
 
-let userController = CONTROLLERS.user;
+let customerController = CONTROLLERS.customer;
 let loginController = CONTROLLERS.login;
 let companyController = CONTROLLERS.company;
 let cleaningTypeController = CONTROLLERS.cleaningType;
-let serviceOfCompanyController = CONTROLLERS.serviceOfCompany;
-let roomTypeController = CONTROLLERS.roomTypeController;
+let roomTypeController = CONTROLLERS.roomType;
+let profileController = CONTROLLERS.profile;
 
 export const routesV1: IRoute[] = [
     {
         path: '/register',
         httpMethod: 'POST',
         middleware: [
-            userController.register
+            customerController.register
+        ]
+    },
+    {
+        path: '/profile',
+        httpMethod: 'POST',
+        middleware: [
+            profileController.getProfile
+        ]
+    },
+    {
+        path: '/updateUserProfile',
+        httpMethod: 'POST',
+        middleware: [
+            profileController.updateProfile,
+            customerController.saveUpdatedProfile
+        ]
+    },
+    {
+        path: '/updateCompanyProfile',
+        httpMethod: 'POST',
+        middleware: [
+            profileController.updateProfile,
+            companyController.saveUpdatedProfile
+        ]
+    },
+    {
+        path: '/registerCompany',
+        httpMethod: 'POST',
+        middleware: [
+            companyController.register
         ]
     },
     {
@@ -27,7 +57,7 @@ export const routesV1: IRoute[] = [
         path: '/users',
         httpMethod: 'GET',
         middleware: [
-            userController.getAllUsers
+            customerController.getAllUsers
         ]
     },
     {
@@ -37,14 +67,7 @@ export const routesV1: IRoute[] = [
             companyController.getAllCompany
         ]
     },
-    {
-        path: '/registerCompany',
-        httpMethod: 'POST',
-        middleware: [
-            companyController.register
-           // serviceOfCompanyController.addServicesOfCompany
-        ]
-    },
+
     {
         path: '/cleaningTypes',
         httpMethod: 'GET',
@@ -77,7 +100,7 @@ export const routesV1: IRoute[] = [
         path: '/a',
         httpMethod: 'GET',
         middleware: [
-            userController.checkAuthentication
+            customerController.checkAuthentication
            // userController.auth,
           //  userController.getProfile
         ]
