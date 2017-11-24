@@ -22,7 +22,9 @@ class CustomerController {
                 username: req.body.username,
                 email: req.body.email,
                 phone: req.body.phone,
-                role: req.body.role
+                role: req.body.role,
+                status: "active",
+                banReason: ""
             });
             User.addUser(newUser, (err, user) => {
                 if (err) {
@@ -70,8 +72,8 @@ class CustomerController {
                  }*/
             })(req, res, next);
         };
-        this.getAllUsers = (req, res) => {
-            User.getUsers((err, users) => {
+        this.getAlCustomers = (req, res) => {
+            User.getCustomers((err, users) => {
                 if (err) {
                     res.json({ success: false, msg: 'Fail to get users' });
                 }

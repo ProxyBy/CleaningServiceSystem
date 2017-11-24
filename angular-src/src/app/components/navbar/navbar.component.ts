@@ -11,7 +11,8 @@ import { FlashMessagesService } from "angular2-flash-messages";
 })
 export class NavbarComponent implements OnInit {
   private adminPages = [
-    "users"
+    "users",
+    "companyList"
   ];
 
   private userPages = [

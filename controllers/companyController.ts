@@ -18,7 +18,9 @@ export class CompanyController {
             password: req.body.password,
             cleaningTypes: req.body.cleaningTypes,
             roomPrices: req.body.roomPrices,
-            role: req.body.role
+            role: req.body.role,
+            status: "active",
+            banReason: ""
         });
         User.addUser(newCompany, (err: any, company: any) => {
             if(err){

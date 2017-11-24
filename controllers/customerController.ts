@@ -45,7 +45,9 @@ export class CustomerController {
             username: req.body.username,
             email: req.body.email,
             phone: req.body.phone,
-            role: req.body.role
+            role: req.body.role,
+            status: "active",
+            banReason: ""
         });
 
         User.addUser(newUser, (err: any, user: any) => {
@@ -105,8 +107,8 @@ export class CustomerController {
 
 
 
-    public getAllUsers: Function = (req: Request, res: Response) => {
-        User.getUsers((err: any, users: any) => {
+    public getAlCustomers: Function = (req: Request, res: Response) => {
+        User.getCustomers((err: any, users: any) => {
             if(err){
                 res.json({success: false, msg:'Fail to get users'});
             } else {

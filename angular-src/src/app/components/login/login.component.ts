@@ -13,6 +13,7 @@ import {identifierName} from "@angular/compiler";
 export class LoginComponent implements OnInit {
   identifier: String;
   password: String;
+  user: any;
 
   constructor(
     private authService: AuthService,
@@ -26,13 +27,13 @@ export class LoginComponent implements OnInit {
 
   onLoginSubmit(){
     if(this.validateService.validateEmail(this.identifier)){
-      const user = {
+      this.user = {
         email: this.identifier,
         password: this.password
       }
     }
     if(this.validateService.validatePhone(this.identifier)){
-      const user = {
+      this.user = {
         phone: this.identifier,
         password: this.password
       }
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
       return false;
     }
 
-    this.authService.authenticateUser(user).subscribe(data => {
+    this.authService.authenticateUser(this.user).subscribe(data => {
       if(data.success){
         this.authService.storeUserData(data.token, data.user);
         this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});

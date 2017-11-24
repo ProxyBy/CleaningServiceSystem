@@ -61,7 +61,8 @@ export class LoginController {
                                 id: user._id,
                                 username: user.username,
                                 role: user.role
-                            }
+                            },
+                            msg: "Hello " + user.username + " (" + user.role + ")"
                         });
                     } else {
                         return res.json({success: false, msg: 'Wrong password'});
@@ -88,7 +89,8 @@ export class LoginController {
                                 id: user._id,
                                 username: user.username,
                                 role: user.role
-                            }
+                            },
+                            msg: "Hello " + user.username + " (" + user.role + ")"
                         });
                     } else {
                         return res.json({success: false, msg: 'Wrong password'});

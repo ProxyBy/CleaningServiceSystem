@@ -57,7 +57,7 @@ export const routesV1: IRoute[] = [
         path: '/users',
         httpMethod: 'GET',
         middleware: [
-            customerController.getAllUsers
+            customerController.getAlCustomers
         ]
     },
     {

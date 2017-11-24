@@ -43,7 +43,13 @@ const UsersSchema = mongoose.Schema({
             price: {
                 type: Number
             }
-        }]
+        }],
+    status:  {
+        type: String
+    },
+    banReason:  {
+        type: String
+    }
 });
 
 const User = module.exports = mongoose.model('user', UsersSchema);
@@ -53,11 +59,15 @@ module.exports.getUserById = function(id, callback){
 };
 
 module.exports.getSecuredUserById = function(id, callback){
-    User.findById(id,{password: 0}, callback);
+    User.findById(id,{password: 0, status: 0, banReason: 0}, callback);
 };
 
 module.exports.getCustomers = function(callback){
-    User.find({role: "Company"},{}, callback);
+    User.find({role: "customer"},{}, callback);
+};
+
+module.exports.getCompany = function(callback){
+    User.find({role: "company"},{}, callback);
 };
 
 module.exports.updateCustomer = function(newUser, callback){
@@ -77,12 +87,12 @@ module.exports.updateCompany = function(newUser, callback){
 };
 
 module.exports.getUserByEmail = function(email, callback){
-    const query = {email: email}
+    const query = {email: email, status: "active"};
     User.findOne(query, callback);
 };
 
 module.exports.getUserByPhone = function(phone, callback){
-    const query = {phone: phone}
+    const query = {phone: phone, status: "active"};
     User.findOne(query, callback);
 };
 
@@ -112,10 +122,6 @@ module.exports.comparePassword = function(condidatePassword, hash, callback) {
         if(err) throw err;
         callback(null, isMatch);
     });
-};
-
-module.exports.getCompany = function(callback){
-    User.find({},{}, callback);
 };
 
 module.exports.getParametrizedCompany = function(criteria, callback){

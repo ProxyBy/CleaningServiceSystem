@@ -56,10 +56,12 @@ db.roomtypes.insert(
 // add admin  pass= m
 db.users.insert(
    [{
-      "name" : "Admin",
       "email" : "admin@bk.ru",
+      "phone" : "000-000-0000",
       "username" : "admin",
       "password" : "$2a$10$JuScVxuJsvEPatU5cR.b9uzlBZxR21lRJrTk2LhqxW2y212I4cQw2",
-      "role" : "admin"
+      "role" : "admin",
+      "status" : "active",
+      "banReason" : ""
    }]
 )
