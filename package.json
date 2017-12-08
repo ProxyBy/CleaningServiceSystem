@@ -20,7 +20,8 @@
     "multer": "1.1.0",
     "nconf": "^0.8.5",
     "passport": "*",
-    "passport-jwt": "^2.2.1"
+    "passport-jwt": "^2.2.1",
+    "random-id": "0.0.2"
   },
   "author": "Misha Seregin",
   "license": "ISC",

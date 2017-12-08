@@ -49,6 +49,12 @@ const UsersSchema = mongoose.Schema({
     },
     banReason:  {
         type: String
+    },
+    active: {
+        type: Boolean
+    },
+    temproraryToken: {
+        type: String
     }
 });
 
@@ -57,6 +63,12 @@ const User = module.exports = mongoose.model('user', UsersSchema);
 module.exports.getUserById = function(id, callback){
     User.findById(id, callback);
 };
+
+module.exports.getUser = function(newUser, callback){
+    console.log("asddddddddddddd" + newUser );
+    User.find({username: newUser.username, email: newUser.email, phone: newUser.phone, active: "true"},{}, callback);
+};
+
 
 module.exports.getSecuredUserById = function(id, callback){
     User.findById(id,{password: 0, status: 0, banReason: 0}, callback);
@@ -84,6 +96,13 @@ module.exports.updateCompany = function(newUser, callback){
         cleaningTypes: newUser.cleaningTypes,
         roomPrices: newUser.roomPrices
     }}, { new: true },callback);
+};
+
+module.exports.userModeration = function(user, callback){
+    User.findByIdAndUpdate(user._id, { $set: {
+        status: user.status,
+        banReason: user.banReason
+    }}, { new: false },callback);
 };
 
 module.exports.getUserByEmail = function(email, callback){
@@ -126,4 +145,9 @@ module.exports.comparePassword = function(condidatePassword, hash, callback) {
 
 module.exports.getParametrizedCompany = function(criteria, callback){
     User.find({'cleaningType.typeId': criteria.cleaningType}).populate('cleaningType', { name: 1, _id: 0}).exec(callback);
+};
+
+
+module.exports.activateUser = function(newUser, callback){
+  User.update({ username: newUser.username, email: newUser.email, phone: newUser.phone, temproraryToken: newUser.temproraryToken}, { $set: { active: 'true' }}, callback);
 };

@@ -97,6 +97,20 @@ export const routesV1: IRoute[] = [
         ]
     },
     {
+        path: '/profileModeration',
+        httpMethod: 'POST',
+        middleware: [
+            profileController.profileModeration
+        ]
+    },
+    {
+        path: '/activateUser',
+        httpMethod: 'POST',
+        middleware: [
+            profileController.activateProfile
+        ]
+    },
+    {
         path: '/a',
         httpMethod: 'GET',
         middleware: [

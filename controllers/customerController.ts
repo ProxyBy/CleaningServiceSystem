@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
-import {Schema} from "inspector";
 
+import {NotificationController} from './NotificationController';
 const User = require('../models/user');
 const express = require('express');
 const router = express.Router();
@@ -10,6 +10,8 @@ const config = require('../config/bdConfig');
 
 //const JwtStrategy = require('passport-jwt').Strategy;
 //const ExtractJwt = require('passport-jwt').ExtractJwt;
+var randomID = require("random-id");
+
 
 
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -22,7 +24,10 @@ const jwtOptions = {
 };
 
 export class CustomerController {
+
+
     constructor(){
+
         passport.use(new JwtStrategy(jwtOptions, (jwt_payload: any, done: any) => {
             User.findOne({id: jwt_payload.sub}, (err: any, user: any) => {
                 if(err){
@@ -47,14 +52,17 @@ export class CustomerController {
             phone: req.body.phone,
             role: req.body.role,
             status: "active",
-            banReason: ""
+            banReason: "",
+            active: false,
+            temproraryToken: randomID(6, "0")
         });
-
         User.addUser(newUser, (err: any, user: any) => {
             if(err){
                 res.json({success: false, msg:'Fail to register user'});
             } else {
-                res.json({success: true, msg: 'User registered'})
+                let notificationController = new NotificationController();
+                notificationController.sendRegisterNotification(newUser);
+                res.json({success: true, msg: 'User registered! Please check your email for activation'})
             }
         });
     };

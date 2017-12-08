@@ -27,4 +27,18 @@ export class ProfileService {
     return this.http.post('http://localhost:3000/updateUserProfile', user, {headers: headers})
       .map(res => res.json());
   }
+
+  profileModeration(user){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/profileModeration', user, {headers: headers})
+      .map(res => res.json());
+  }
+
+  activateProfile(user){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/activateUser', user, {headers: headers})
+      .map(res => res.json());
+  }
 }

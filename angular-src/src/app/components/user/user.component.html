@@ -1,6 +1,56 @@
-<table>
+<div class="flex-container">
+  <form class="flex-element" name="form">
+    <table>
+  <tr>
+    <th>User</th>
+    <th>Email</th>
+    <th>Phone number</th>
+    <th>Status</th>
+    <th>Blocking reason</th>
+    <th></th>
+  </tr>
   <tr *ngFor="let user of users" >
     <td>{{user.username}}</td>
+    <td>{{user.email}}</td>
+    <td>{{user.phone}}</td>
+    <td>{{user.status}}</td>
+    <td>{{user.banReason}}</td>
+    <td>
+      <button class="btn btn-primary" *ngIf="user.status == 'inactive'" (click)="openUnlock(unlock, user._id)">Unlock</button>
+      <button class="btn btn-primary" *ngIf="user.status == 'active'" (click)="openLock(lock, user._id, user.banReason)">Lock</button>
+    </td>
   </tr>
 </table>
+    </form>
+</div>
+
+<md2-dialog #lock>
+  <md2-dialog-title>Confirm you action</md2-dialog-title>
+  <div class="form-group">
+    <label>Would you like to lock user? </label>
+    <label>Please fill the reason:</label>
+    <input type="textarea" [(ngModel)]="currentBanReason" name="banReason"  id="banReason" class="form-control" required #banReason="ngModel">
+    <div *ngIf="banReason.invalid"
+         class="alert alert-danger">
+      <div *ngIf="banReason.errors.required">
+        Reason is required.
+      </div>
+    </div>
+  </div>
+  <md2-dialog-footer>
+    <button  class="btn btn-primary" button="primary" (click)="confirmLock(lock, _id)">Ok</button>
+    <button class="btn btn-dafault" button (click)="cancel(lock)">Cancel</button>
+  </md2-dialog-footer>
+</md2-dialog>
+
+<md2-dialog #unlock>
+  <md2-dialog-title>Confirm you action</md2-dialog-title>
+  <div class="form-group">
+    <label> Would you like to unlock user? </label>
+  </div>
+  <md2-dialog-footer>
+    <button class="btn btn-primary" button="primary" (click)="confirmUnlock(unlock, _id)">Ok</button>
+    <button class="btn btn-dafault" button (click)="cancel(unlock)">Cancel</button>
+  </md2-dialog-footer>
+</md2-dialog>
 

@@ -31,7 +31,7 @@ import {RoomTypeService} from "./services/room-type.service";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {ProfileService} from "./services/profile.service";
 import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
-
+import { Md2Module }  from 'md2';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -77,7 +77,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule,
 //    TimePickerModule,
-    HttpModule
+    HttpModule,
+    Md2Module
   ],
   providers: [
     ValidateService,

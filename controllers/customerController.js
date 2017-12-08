@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const NotificationController_1 = require("./NotificationController");
 const User = require('../models/user');
 const express = require('express');
 const router = express.Router();
@@ -8,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/bdConfig');
 //const JwtStrategy = require('passport-jwt').Strategy;
 //const ExtractJwt = require('passport-jwt').ExtractJwt;
+var randomID = require("random-id");
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwtOptions = {
@@ -24,14 +26,18 @@ class CustomerController {
                 phone: req.body.phone,
                 role: req.body.role,
                 status: "active",
-                banReason: ""
+                banReason: "",
+                active: false,
+                temproraryToken: randomID(6, "0")
             });
             User.addUser(newUser, (err, user) => {
                 if (err) {
                     res.json({ success: false, msg: 'Fail to register user' });
                 }
                 else {
-                    res.json({ success: true, msg: 'User registered' });
+                    let notificationController = new NotificationController_1.NotificationController();
+                    notificationController.sendRegisterNotification(newUser);
+                    res.json({ success: true, msg: 'User registered! Please check your email for activation' });
                 }
             });
         };
