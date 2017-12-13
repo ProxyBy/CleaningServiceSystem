@@ -17,14 +17,26 @@ export class NotificationController {
     public sendModerationNotification(newUser: any){
         let subject;
         let html;
-        console.log(newUser);
         if (newUser.status == "active"){
-            subject = "You Account was Unlocked";
+            subject = "You Account was unlocked";
             html = "You can login";
         } else {
-            subject = "You Account was Locked";
+            subject = "You Account was locked";
             html = newUser.banReason;
         }
+        let mailOpts = {
+            from: config.user,
+            replyTo: newUser.email,
+            to: newUser.email,
+            subject: subject,
+            html: html
+        };
+        this.sendMailNotification(mailOpts);
+    }
+
+    public sendDeleteNotification(newUser: any){
+        let subject = "You Account was deleted";
+        let html = "You accaunt was delete. You didn't activate account. ";
         let mailOpts = {
             from: config.user,
             replyTo: newUser.email,

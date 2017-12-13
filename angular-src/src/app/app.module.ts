@@ -32,6 +32,7 @@ import {ProfileComponent} from "./components/profile/profile.component";
 import {ProfileService} from "./services/profile.service";
 import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
 import { Md2Module }  from 'md2';
+import {OrderService} from "./services/order.service";
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -89,7 +90,8 @@ const appRoutes: Routes = [
     CleaningTypeService,
     ReservationService,
     RoomTypeService,
-    ProfileService
+    ProfileService,
+    OrderService
   ],
   bootstrap: [
     AppComponent

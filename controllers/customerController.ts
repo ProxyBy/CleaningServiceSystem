@@ -62,7 +62,7 @@ export class CustomerController {
             } else {
                 let notificationController = new NotificationController();
                 notificationController.sendRegisterNotification(newUser);
-                res.json({success: true, msg: 'User registered! Please check your email for activation'})
+                res.json({success: true, _id: newUser._id, msg: 'User registered! Please check your email for activation'})
             }
         });
     };

@@ -7,6 +7,7 @@ let companyController = CONTROLLERS.company;
 let cleaningTypeController = CONTROLLERS.cleaningType;
 let roomTypeController = CONTROLLERS.roomType;
 let profileController = CONTROLLERS.profile;
+let orderController = CONTROLLERS.order;
 
 export const routesV1: IRoute[] = [
     {
@@ -108,6 +109,20 @@ export const routesV1: IRoute[] = [
         httpMethod: 'POST',
         middleware: [
             profileController.activateProfile
+        ]
+    },
+    {
+        path: '/deleteUser',
+        httpMethod: 'POST',
+        middleware: [
+            profileController.deleteProfile
+        ]
+    },
+    {
+        path: '/order',
+        httpMethod: 'POST',
+        middleware: [
+            orderController.order
         ]
     },
     {

@@ -15,6 +15,7 @@ export class CompanyService {
   }
 
   getCompanyParametrizedList(params){
+    console.log(params);
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('http://localhost:3000/companyParametrizedList', params, {headers: headers})

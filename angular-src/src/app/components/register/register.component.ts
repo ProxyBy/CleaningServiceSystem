@@ -74,6 +74,7 @@ export class RegisterComponent implements OnInit {
       if(data.success){
         this.flashMessageService.show('You are now registered. We send activation cod by email. Please activate your accaunt.', {cssClass: 'alert-success'});
         this.isDisabled = true;
+        this.user._id = data._id;
       } else {
         this.flashMessageService.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/register']);
@@ -82,19 +83,36 @@ export class RegisterComponent implements OnInit {
   }
 
   activateSubmit(){
-    if (this.user.temproraryToken != null){
+    if (this.user.temproraryToken != null && this.user._id != null){
       this.atempt--;
       this.profileService.activateProfile(this.user).subscribe(data => {
-        if(data.success && this.atempt != 0){
-          if(data._id){
-            this.flashMessageService.show('Your registration is finish. You can login', {cssClass: 'alert-success'});
-            this.router.navigate(['/login']);
+        if(data.success && this.atempt > 0){
+          if(data.active){
+            if(this.user.email !=null){
+              this.user.identifier = this.user.email;
+            } else {
+              this.user.identifier = this.user.phone;
+            }
+            this.authService.authenticateUser(this.user).subscribe(data => {
+              if(data.success){
+                this.authService.storeUserData(data.token, data.user);
+                window.history.back();
+              } else {
+                this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+              }
+            });
           } else {
-            this.flashMessageService.show('Your activation cof not correct. Try again. You have ' + this.atempt + ' atempt(s)' , {cssClass: 'alert-danger', timeout: 3000});
+            this.flashMessageService.show('Your activation cod not correct. Try again. You have ' + this.atempt + ' atempt(s)' , {cssClass: 'alert-danger', timeout: 3000});
           }
         } else {
-          this.flashMessageService.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
-          location.reload();
+          this.flashMessageService.show('Something went wrong. You should register again', {cssClass: 'alert-danger', timeout: 3000});
+          this.profileService.deleteProfile(this.user).subscribe(data => {
+            if(data.success){
+              location.reload();
+            } else {
+              this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+            }
+          });
         }
       })
     }

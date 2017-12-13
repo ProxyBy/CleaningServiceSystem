@@ -69,9 +69,7 @@ export class ProfileController {
 
     public activateProfile: Function=  (req: Request, res: Response) => {
         var newUser = new User({
-            username: req.body.username,
-            email: req.body.email,
-            phone: req.body.phone,
+            _id: req.body._id,
             temproraryToken: req.body.temproraryToken
         });
         User.activateUser(newUser, (err: any) => {
@@ -82,10 +80,10 @@ export class ProfileController {
                     if(err){
                         res.json({success: false, msg:'Fail to activate user'});
                     } else {
-                        if(user.length != 0){
+                        if(user != null){
                             res.json({
                                 success: true,
-                                _id: user[0]._id
+                                active: user.active
                             });
                         } else {
                             res.json({
@@ -96,7 +94,22 @@ export class ProfileController {
                 });
             }
         });
+    };
 
+    public deleteProfile: Function=  (req: Request, res: Response) => {
+        var newUser = new User({
+            _id: req.body._id,
+            email: req.body.email
+        });
+        let notificationController = new NotificationController();
+        notificationController.sendDeleteNotification(newUser);
+        User.deleteUser(newUser, (err: any) => {
+            if(err){
+                res.json({success: false, msg:'Fail to delete user'});
+            } else {
+                res.json({success: true, msg:'User was deleted'});
+            }
+        });
     };
 
 }

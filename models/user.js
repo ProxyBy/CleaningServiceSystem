@@ -65,8 +65,7 @@ module.exports.getUserById = function(id, callback){
 };
 
 module.exports.getUser = function(newUser, callback){
-    console.log("asddddddddddddd" + newUser );
-    User.find({username: newUser.username, email: newUser.email, phone: newUser.phone, active: "true"},{}, callback);
+    User.findOne({_id: newUser._id, active: "true"},{}, callback);
 };
 
 
@@ -144,10 +143,13 @@ module.exports.comparePassword = function(condidatePassword, hash, callback) {
 };
 
 module.exports.getParametrizedCompany = function(criteria, callback){
-    User.find({'cleaningType.typeId': criteria.cleaningType}).populate('cleaningType', { name: 1, _id: 0}).exec(callback);
+    User.find({'cleaningTypes.typeId': criteria.cleaningType, 'status': 'active', 'active': true, 'role': 'company'},{password: 0}).populate('cleaningType', { username: 1, _id: 0}).exec(callback);
 };
 
-
 module.exports.activateUser = function(newUser, callback){
-  User.update({ username: newUser.username, email: newUser.email, phone: newUser.phone, temproraryToken: newUser.temproraryToken}, { $set: { active: 'true' }}, callback);
+    User.update({ _id: newUser._id, temproraryToken: newUser.temproraryToken}, { $set: { active: 'true' }}, callback);
+};
+
+module.exports.deleteUser = function(newUser, callback){
+    User.remove({ _id: newUser._id}, callback);
 };

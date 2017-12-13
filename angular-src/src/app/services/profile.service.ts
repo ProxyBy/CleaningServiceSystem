@@ -41,4 +41,11 @@ export class ProfileService {
     return this.http.post('http://localhost:3000/activateUser', user, {headers: headers})
       .map(res => res.json());
   }
+
+  deleteProfile(user){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/deleteUser', user, {headers: headers})
+      .map(res => res.json());
+  }
 }

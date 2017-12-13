@@ -5,6 +5,7 @@ import {CompanyController} from "../controllers/companyController";
 import {CleaningTypeController} from "../controllers/cleaningTypeController";
 import {RoomTypeController} from "../controllers/roomTypeController";
 import {ProfileController} from "../controllers/profileController";
+import {OrderController} from "../controllers/orderController";
 
 export const CONTROLLERS = {
     login: new LoginController(),
@@ -13,5 +14,6 @@ export const CONTROLLERS = {
     company: new CompanyController(),
     cleaningType: new CleaningTypeController(),
     roomType: new RoomTypeController(),
-    profile: new ProfileController()
+    profile: new ProfileController(),
+    order: new OrderController()
 };

@@ -1,4 +1,5 @@
 import {Request, Response} from 'express';
+import {isUndefined} from "util";
 
 const User = require('../models/user');
 const express = require('express');
@@ -20,6 +21,7 @@ export class CompanyController {
             roomPrices: req.body.roomPrices,
             role: req.body.role,
             status: "active",
+            active: true, //TODO
             banReason: ""
         });
         User.addUser(newCompany, (err: any, company: any) => {
@@ -44,16 +46,44 @@ export class CompanyController {
 
     public getCompanyParametrizedList: Function = (req: Request, res: Response) => {
         var criteria = {
-            cleaningType: req.body.selectedType
+            cleaningType: JSON.parse(req.body.selectedType)._id,
+            roomDescriptions: JSON.parse(req.body.roomDescriptions)
         };
-        User.getParametrizedCompany(criteria, (err: any, company: any) => {
+
+        User.getParametrizedCompany(criteria, (err: any, companies: any) => {
             if(err){
                 res.json({success: false, msg:'Fail to get cleaning company'});
             } else {
-                console.log(company.toString());
-                res.json({success: true, company: company})
+                var parametrizedCompanies: any[] = [];
+                for (let company of companies){
+                    var parametrizedCompany = {
+                        _id: company._id,
+                        username: company.username,
+                        approximatePrice: this.addApproximatePrice(company, criteria )
+                    };
+                    parametrizedCompanies.push(parametrizedCompany);
+                }
+                res.json({success: true, company: parametrizedCompanies})
             }
         });
+    };
+
+    public addApproximatePrice: Function = (company: any, criteria: any) => {
+        let approximatePrice = 0;
+        for (let roomPrice of company.roomPrices){
+           for (let roomDescription of criteria.roomDescriptions){
+              if(roomPrice.typeId == roomDescription._id && roomDescription.count != undefined && roomDescription.count > 0){
+                 approximatePrice = (roomPrice.price * roomDescription.count) + approximatePrice;
+                 break;
+              }
+           }
+        }
+        for(let cleaningType of company.cleaningTypes){
+            if (cleaningType.typeId == criteria.cleaningType){
+                approximatePrice = approximatePrice * cleaningType.coefficient;
+            }
+        }
+        return approximatePrice;
     };
 
     public saveUpdatedProfile: Function = (req: Request, res: Response) => {

@@ -1,19 +1,25 @@
-<h2 class="page-header">Booking service</h2>
-<form (submit)="onViewOffersSubmit(cleaningRequest)">
+<div class="flex-container">
+<form class="flex-element">
+  <h2 class="page-header">Booking service</h2>
   <div class="form-group">
     <label>Address / Location</label>
     <input type="text" [(ngModel)]="cleaningRequest.address" name="cleaningRequest.address" class="form-control">
   </div>
   <div class="form-group">
     <label>Type of cleaning</label>
-      <select [(ngModel)]="cleaningRequest.selectedType" [ngModelOptions]="{standalone: true}">
+      <select [(ngModel)]="selectedType._id" [ngModelOptions]="{standalone: true}">
       <option *ngFor="let cleaningType of cleaningTypes" [ngValue]="cleaningType._id">{{cleaningType.name}}</option>
     </select>
   </div>
+
   <div class="form-group">
     <label>Description of premises</label>
-    <input type="text" [(ngModel)]="cleaningRequest.description" name="description" class="form-control">
+    <div *ngFor="let roomType of roomTypes">
+      <label>{{roomType.name}}</label>
+      <input type="text" (change)="addDescription(roomType._id, $event.target.value)" name="description" class="form-control">
+    </div>
   </div>
+
   <div class="form-group">
     <label>Day / days</label>
     <div>
@@ -40,10 +46,13 @@
       <option value="Every month">Every month</option>
     </select>
   </div>
-  <div class="form-group">
+  <div *ngIf="!authService.loggedIn()" class="form-group">
     <label>Email or phone field to confirm the order</label>
     <input type="text" [(ngModel)]="cleaningRequest.email" name="email" class="form-control">
   </div>
-  <input type="submit" class="btn btn-primary" value="View offers" [routerLink]="['/companyParametrizedList', cleaningRequest]">
+<!--  <input type="submit" class="btn btn-primary" value="View offers" [routerLink]="['/companyParametrizedList', cleaningRequest]">-->
+  <input type="submit" class="btn btn-primary" value="View offers" (click)="onViewOffersSubmit()">
+
 </form>
+</div>
 
