@@ -17,7 +17,9 @@ export class NavbarComponent implements OnInit {
 
   private userPages = [
     "company",
-    "profile"
+    "profile",
+    "serviceHistory",
+    "companyAvailableList"
   ];
 
   private companyPages = [

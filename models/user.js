@@ -78,7 +78,11 @@ module.exports.getCustomers = function(callback){
 };
 
 module.exports.getCompany = function(callback){
-    User.find({role: "company"},{}, callback);
+    User.find({role: "company"},{password: 0}, callback);
+};
+
+module.exports.getAvailableCompany = function(callback){
+    User.find({role: "company", status: "active", 'active': true},{password: 0}, callback);
 };
 
 module.exports.updateCustomer = function(newUser, callback){

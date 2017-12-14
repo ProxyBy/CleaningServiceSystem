@@ -15,7 +15,9 @@ export class CleaningTypeController {
             if(err){
                 res.json({success: false, msg:'Fail to get cleaning types'});
             } else {
+                console.log(cleaningType);
                 res.json({success: true, types: cleaningType})
+
             }
         });
     };

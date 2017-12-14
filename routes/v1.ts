@@ -91,6 +91,13 @@ export const routesV1: IRoute[] = [
         ]
     },
     {
+        path: '/companyAvailableList',
+        httpMethod: 'GET',
+        middleware: [
+            companyController.getCompanyAvailableList
+        ]
+    },
+    {
         path: '/companyParametrizedList',
         httpMethod: 'POST',
         middleware: [
@@ -125,6 +132,15 @@ export const routesV1: IRoute[] = [
             orderController.order
         ]
     },
+    {
+        path: '/getOrders',
+        httpMethod: 'POST',
+        middleware: [
+            orderController.getOrders
+        ]
+    },
+
+
     {
         path: '/a',
         httpMethod: 'GET',

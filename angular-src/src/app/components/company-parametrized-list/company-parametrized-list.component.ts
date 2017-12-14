@@ -35,7 +35,6 @@ export class CompanyParametrizedListComponent implements OnInit {
   ngOnInit() {
     this.activeRoute.queryParams.subscribe(params => {
       this.cleaningRequest = params;
-      console.log(this.cleaningRequest);
       this.selectedType = JSON.parse(this.cleaningRequest.selectedType);
       this.roomDescriptions = JSON.parse(this.cleaningRequest.roomDescriptions);
       this.companyService.getCompanyParametrizedList(params).subscribe(data => {
@@ -65,9 +64,7 @@ export class CompanyParametrizedListComponent implements OnInit {
     this.order = {
       cleaningTypeId: this.selectedType._id,
       cleaningTypeName: this.selectedType.name,
-      roomTypeId: this.roomDescriptions.typeId,
-      roomCount: this.roomDescriptions.count,
-      roomName: this.roomDescriptions.name,
+      roomDescriptions: JSON.stringify(this.roomDescriptions),
       address: this.cleaningRequest.address,
       selectedDays: this.cleaningRequest.selectedDays,
       regularity: this.cleaningRequest.regularity,
@@ -77,9 +74,6 @@ export class CompanyParametrizedListComponent implements OnInit {
       customerId: this.authService.getId(),
       price: this.selectedCompany.approximatePrice,
     };
-
-    console.log(this.order);
-
     this.orderService.order(this.order).subscribe(data => {
       if(data.success){
         dialog.close();

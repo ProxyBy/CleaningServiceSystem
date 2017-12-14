@@ -1,3 +1,22 @@
-<p>
-  company-available-list works!
-</p>
+<div class="flex-container">
+  <form class="flex-element" name="form">
+    <table>
+      <tr>
+        <th>Company</th>
+        <th>Logo</th>
+        <th>Address</th>
+        <th>Rating</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let company of companies" >
+        <td>{{company.username}}</td>
+        <td>{{company.logo}}</td>
+        <td>{{company.address}}</td>
+        <td></td>
+        <td>
+          <button class="btn btn-primary" (click)="order(company._id)">Order</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>

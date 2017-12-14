@@ -44,6 +44,19 @@ export class CompanyController {
         });
     };
 
+
+    public getCompanyAvailableList: Function = (req: Request, res: Response) => {
+        console.log("company");
+        User.getAvailableCompany((err: any, company: any) => {
+            if(err){
+                res.json({success: false, msg:'Fail to get cleaning company'});
+            } else {
+                console.log(company);
+                res.json({success: true, company: company})
+            }
+        });
+    };
+
     public getCompanyParametrizedList: Function = (req: Request, res: Response) => {
         var criteria = {
             cleaningType: JSON.parse(req.body.selectedType)._id,

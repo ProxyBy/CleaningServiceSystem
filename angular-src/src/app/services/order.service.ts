@@ -13,4 +13,11 @@ export class OrderService {
     return this.http.post('http://localhost:3000/order', order, {headers: headers})
       .map(res => res.json());
   }
+
+  getOrders(userId){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/getOrders', {userId},{headers: headers})
+      .map(res => res.json());
+  }
 }

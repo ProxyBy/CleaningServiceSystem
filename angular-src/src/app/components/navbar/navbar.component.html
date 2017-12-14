@@ -12,13 +12,21 @@
     <li *ngIf="authService.loggedIn() && isAvailablePage('companyList')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
       <a [routerLink]="['/companyList']">Cleaning service</a>
     </li>
+    <li *ngIf="authService.loggedIn() && isAvailablePage('serviceHistory')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/serviceHistory']">Service history</a>
+    </li>
     <li [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
       <a [routerLink]="['/reservation']">Reservation</a>
+    </li>
+    <li *ngIf="authService.loggedIn() && isAvailablePage('companyAvailableList')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/companyAvailableList']">Available company</a>
     </li>
     <li *ngIf="authService.loggedIn() && isAvailablePage('dashboard')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
       <a [routerLink]="['/dashboard']">Dashboard</a>
     </li>
   </ul>
+
+
   <ul class="main-nav">
     <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
       <a [routerLink]="['/login']">Login</a>

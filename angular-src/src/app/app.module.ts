@@ -33,6 +33,8 @@ import {ProfileService} from "./services/profile.service";
 import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
 import { Md2Module }  from 'md2';
 import {OrderService} from "./services/order.service";
+import { ServiceHistoryComponent } from './components/service-history/service-history.component';
+import { CommentComponent } from './components/comment/comment.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -49,7 +51,9 @@ const appRoutes: Routes = [
   {path: 'companyParametrizedList', component: CompanyParametrizedListComponent},
   {path: 'companyList', component: CompanyListComponent},
   {path: 'companyAvailableList', component: CompanyAvailableListComponent},
-  {path: 'companyInfo', component: CompanyInfoComponent}
+  {path: 'companyInfo/:companyId', component: CompanyInfoComponent},
+  {path: 'serviceHistory', component: ServiceHistoryComponent},
+  {path: 'comment', component: CommentComponent}
 ];
 
 @NgModule({
@@ -70,7 +74,9 @@ const appRoutes: Routes = [
     CompanyInfoComponent,
     CompanyAvailableListComponent,
     ProfileComponent,
-    CompanyProfileComponent
+    CompanyProfileComponent,
+    ServiceHistoryComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,

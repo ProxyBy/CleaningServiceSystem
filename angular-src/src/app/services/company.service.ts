@@ -21,5 +21,12 @@ export class CompanyService {
     return this.http.post('http://localhost:3000/companyParametrizedList', params, {headers: headers})
       .map(res => res.json());
   }
+
+  getAvailableCompanyList(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/companyAvailableList', {headers: headers})
+      .map(res => res.json());
+  }
 }
 
