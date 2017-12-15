@@ -35,6 +35,9 @@ import { Md2Module }  from 'md2';
 import {OrderService} from "./services/order.service";
 import { ServiceHistoryComponent } from './components/service-history/service-history.component';
 import { CommentComponent } from './components/comment/comment.component';
+import {CommentService} from "./services/comment.service";
+import { OrderComponent } from './components/order/order.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -53,7 +56,10 @@ const appRoutes: Routes = [
   {path: 'companyAvailableList', component: CompanyAvailableListComponent},
   {path: 'companyInfo/:companyId', component: CompanyInfoComponent},
   {path: 'serviceHistory', component: ServiceHistoryComponent},
-  {path: 'comment', component: CommentComponent}
+  {path: 'comment/:companyId', component: CommentComponent},
+  {path: 'orderDetails/:orderId', component: OrderDetailsComponent},
+  {path: 'orders', component: OrderComponent}
+
 ];
 
 @NgModule({
@@ -76,7 +82,9 @@ const appRoutes: Routes = [
     ProfileComponent,
     CompanyProfileComponent,
     ServiceHistoryComponent,
-    CommentComponent
+    CommentComponent,
+    OrderComponent,
+    OrderDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +105,8 @@ const appRoutes: Routes = [
     ReservationService,
     RoomTypeService,
     ProfileService,
-    OrderService
+    OrderService,
+    CommentService
   ],
   bootstrap: [
     AppComponent

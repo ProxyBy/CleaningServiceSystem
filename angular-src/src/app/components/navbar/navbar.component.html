@@ -15,11 +15,14 @@
     <li *ngIf="authService.loggedIn() && isAvailablePage('serviceHistory')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
       <a [routerLink]="['/serviceHistory']">Service history</a>
     </li>
-    <li [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+    <li *ngIf="!authService.loggedIn() || (authService.loggedIn() && isAvailablePage('reservation'))" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
       <a [routerLink]="['/reservation']">Reservation</a>
     </li>
     <li *ngIf="authService.loggedIn() && isAvailablePage('companyAvailableList')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
       <a [routerLink]="['/companyAvailableList']">Available company</a>
+    </li>
+    <li *ngIf="authService.loggedIn() && isAvailablePage('orders')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/orders']">Orders</a>
     </li>
     <li *ngIf="authService.loggedIn() && isAvailablePage('dashboard')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
       <a [routerLink]="['/dashboard']">Dashboard</a>

@@ -28,7 +28,6 @@ export class CompanyAvailableListComponent implements OnInit {
   }
 
   order(companyId){
-    console.log(companyId);
     this.router.navigate(['/companyInfo', companyId]);
   }
 

@@ -35,12 +35,33 @@ export class OrderController {
         });
     };
 
-    public getOrders: Function = (req: Request, res: Response) => {
+    public getOrdersForCustomer: Function = (req: Request, res: Response) => {
         Order.getUserOrders(req.body.userId, (err: any, orders: any) => {
             if(err){
                 res.json({success: false, msg:'Fail to get orders'});
             } else {
                 res.json({success: true, orders: orders})
+            }
+        });
+    };
+
+
+    public getOrdersForCompany: Function = (req: Request, res: Response) => {
+        Order.getCompanyOrders(req.body.companyId, (err: any, orders: any) => {
+            if(err){
+                res.json({success: false, msg:'Fail to get orders'});
+            } else {
+                res.json({success: true, orders: orders})
+            }
+        });
+    };
+
+    public getOrderInfo: Function = (req: Request, res: Response) => {
+        Order.getOrder(req.body.orderId, (err: any, order: any) => {
+            if(err){
+                res.json({success: false, msg:'Fail to get order'});
+            } else {
+                res.json({success: true, order: order})
             }
         });
     };

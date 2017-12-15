@@ -3,7 +3,7 @@ import {ProfileService} from "../../services/profile.service";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {CleaningTypeService} from "../../services/cleaning-type.service";
 import {RoomTypeService} from "../../services/room-type.service";
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-company-info',
@@ -27,6 +27,7 @@ export class CompanyInfoComponent implements OnInit {
   roomTypes: any[] = [];
   selectedTypes: any[] = [];
   roomPrices: any[] = [];
+  companyId: any;
 
 
   constructor(
@@ -34,12 +35,14 @@ export class CompanyInfoComponent implements OnInit {
     private flashMessageService: FlashMessagesService,
     private cleaningTypeService: CleaningTypeService,
     private roomTypeService: RoomTypeService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.activeRoute.params.subscribe(params => {
-      this.profileService.getProfile({_id: params['companyId']}).subscribe(data => {
+      this.companyId = params['companyId'];
+      this.profileService.getProfile({_id: this.companyId}).subscribe(data => {
         this.company = data.user;
         this.selectedTypes = this.company.cleaningTypes;
         this.roomPrices = this.company.roomPrices;
@@ -86,5 +89,13 @@ export class CompanyInfoComponent implements OnInit {
         return roomType.name
       }
     }
+  }
+
+  order(){
+
+  }
+
+  comment(){
+    this.router.navigate(['/comment', this.companyId]);
   }
 }

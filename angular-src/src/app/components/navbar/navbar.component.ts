@@ -19,11 +19,13 @@ export class NavbarComponent implements OnInit {
     "company",
     "profile",
     "serviceHistory",
-    "companyAvailableList"
+    "companyAvailableList",
+    "reservation"
   ];
 
   private companyPages = [
-    "companyProfile"
+    "companyProfile",
+    "orders"
   ];
 
   constructor(

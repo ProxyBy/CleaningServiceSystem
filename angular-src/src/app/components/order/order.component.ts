@@ -2,23 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import {OrderService} from "../../services/order.service";
 import {AuthService} from "../../services/auth.service";
 import {FlashMessagesService} from "angular2-flash-messages";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-service-history',
-  templateUrl: './service-history.component.html',
-  styleUrls: ['./service-history.component.css']
+  selector: 'app-order',
+  templateUrl: './order.component.html',
+  styleUrls: ['./order.component.css']
 })
-export class ServiceHistoryComponent implements OnInit {
+export class OrderComponent implements OnInit {
   orders: any[]=[];
 
   constructor(
     private orderService: OrderService,
     private authService: AuthService,
-    private flashMessageService: FlashMessagesService
-  ){}
+    private flashMessageService: FlashMessagesService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.orderService.getCustomerOrders(this.authService.getId()).subscribe(data => {
+    this.orderService.getCompanyOrders(this.authService.getId()).subscribe(data => {
       if(data.success){
         this.orders = data.orders;
       } else {
@@ -26,4 +28,9 @@ export class ServiceHistoryComponent implements OnInit {
       }
     });
   }
+
+  show(orderId){
+    this.router.navigate(['/orderDetails', orderId]);
+  }
+
 }

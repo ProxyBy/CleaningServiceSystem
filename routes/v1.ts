@@ -8,6 +8,7 @@ let cleaningTypeController = CONTROLLERS.cleaningType;
 let roomTypeController = CONTROLLERS.roomType;
 let profileController = CONTROLLERS.profile;
 let orderController = CONTROLLERS.order;
+let commentController = CONTROLLERS.comment;
 
 export const routesV1: IRoute[] = [
     {
@@ -136,7 +137,28 @@ export const routesV1: IRoute[] = [
         path: '/getOrders',
         httpMethod: 'POST',
         middleware: [
-            orderController.getOrders
+            orderController.getOrdersForCustomer
+        ]
+    },
+    {
+        path: '/getCompanyOrders',
+        httpMethod: 'POST',
+        middleware: [
+            orderController.getOrdersForCompany
+        ]
+    },
+    {
+        path: '/addComment',
+        httpMethod: 'POST',
+        middleware: [
+            commentController.addComment
+        ]
+    },
+    {
+        path: '/getOrderInfo',
+        httpMethod: 'POST',
+        middleware: [
+            orderController.getOrderInfo
         ]
     },
 

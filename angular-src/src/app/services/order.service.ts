@@ -14,10 +14,24 @@ export class OrderService {
       .map(res => res.json());
   }
 
-  getOrders(userId){
+  getCustomerOrders(userId){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('http://localhost:3000/getOrders', {userId},{headers: headers})
+      .map(res => res.json());
+  }
+
+  getCompanyOrders(companyId){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/getCompanyOrders', {companyId},{headers: headers})
+      .map(res => res.json());
+  }
+
+  getOrderInfo(orderId){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/getOrderInfo', {orderId},{headers: headers})
       .map(res => res.json());
   }
 }

@@ -43,8 +43,15 @@ const Order = module.exports = mongoose.model('order', OrderSchema);
 
 
 module.exports.getUserOrders = function(userId, callback){
-    console.log(userId);
     Order.find({customerId: userId},{}, callback);
+};
+
+module.exports.getCompanyOrders = function(companyId, callback){
+    Order.find({companyId: companyId},{}, callback);
+};
+
+module.exports.getOrder = function(orderId, callback){
+    Order.findById(orderId,{}, callback);
 };
 
 module.exports.addOrder = function(order, callback){
