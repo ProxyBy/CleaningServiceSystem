@@ -1,15 +1,14 @@
 import {Request, Response} from 'express';
 import {NotificationController} from './NotificationController';
-import {isUndefined} from "util";
 
-const express = require('express');
 const User = require('../models/user');
 
 export class ProfileController {
+
     public getProfile: Function = (req: Request, res: Response) => {
         User.getSecuredUserById(req.body._id, (err: any, user: any) => {
-            if(err){
-                res.json({success: false, msg:'Fail to get user'});
+            if (err) {
+                res.json({success: false, msg: 'Fail to get user'});
             } else {
                 res.json({success: true, user: user})
             }
@@ -18,13 +17,12 @@ export class ProfileController {
 
     public updateProfile: Function = (req: Request, res: Response, next: Function) => {
         User.getUserById(req.body._id, (err: any, user: any) => {
-            if(err){
-                res.json({success: false, msg:'Fail to update user'});
+            if (err) {
+                res.json({success: false, msg: 'Fail to update user'});
             } else {
                 User.comparePassword(req.body.oldPassword, user.password, (err: any, isMatch: boolean) => {
-                    if(err) throw err;
-                    if(isMatch){
-                        let password: any;
+                    if (err) throw err;
+                    if (isMatch) {
                         if (req.body.password) {
                             User.encryptPassword(req.body.password)
                                 .then(
@@ -48,39 +46,38 @@ export class ProfileController {
         });
     };
 
-    public profileModeration: Function =  (req: Request, res: Response) => {
+    public profileModeration: Function = (req: Request, res: Response) => {
         var newUser = new User({
             _id: req.body._id,
             status: req.body.status,
             banReason: req.body.banReason,
             email: req.body.email
         });
-        console.log(newUser);
-        User.userModeration(newUser, (err: any, user: any) => {
-            if(err){
-                res.json({success: false, msg:'Fail to update user'});
+        User.userModeration(newUser, (err: any) => {
+            if (err) {
+                res.json({success: false, msg: 'Fail to update user'});
             } else {
                 let notificationController = new NotificationController();
                 notificationController.sendModerationNotification(newUser);
-                res.json({success: true, msg:'Status has been updated'});
+                res.json({success: true, msg: 'Status has been updated'});
             }
         });
     };
 
-    public activateProfile: Function=  (req: Request, res: Response) => {
+    public activateProfile: Function = (req: Request, res: Response) => {
         var newUser = new User({
             _id: req.body._id,
             temproraryToken: req.body.temproraryToken
         });
         User.activateUser(newUser, (err: any) => {
-            if(err){
-                res.json({success: false, msg:'Fail to activate user'});
+            if (err) {
+                res.json({success: false, msg: 'Fail to activate user'});
             } else {
                 User.getUser(newUser, (err: any, user: any) => {
-                    if(err){
-                        res.json({success: false, msg:'Fail to activate user'});
+                    if (err) {
+                        res.json({success: false, msg: 'Fail to activate user'});
                     } else {
-                        if(user != null){
+                        if (user != null) {
                             res.json({
                                 success: true,
                                 active: user.active
@@ -96,7 +93,7 @@ export class ProfileController {
         });
     };
 
-    public deleteProfile: Function=  (req: Request, res: Response) => {
+    public deleteProfile: Function = (req: Request, res: Response) => {
         var newUser = new User({
             _id: req.body._id,
             email: req.body.email
@@ -104,10 +101,10 @@ export class ProfileController {
         let notificationController = new NotificationController();
         notificationController.sendDeleteNotification(newUser);
         User.deleteUser(newUser, (err: any) => {
-            if(err){
-                res.json({success: false, msg:'Fail to delete user'});
+            if (err) {
+                res.json({success: false, msg: 'Fail to delete user'});
             } else {
-                res.json({success: true, msg:'User was deleted'});
+                res.json({success: true, msg: 'User was deleted'});
             }
         });
     };

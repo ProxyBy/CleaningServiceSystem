@@ -13,7 +13,7 @@ import { ValidateService } from "./services/validate.service";
 import { AuthService } from "./services/auth.service";
 import { FlashMessagesModule } from "angular2-flash-messages";
 import { HttpModule} from "@angular/http";
-//import { AuthGuard} from "./guards/auth.guard";
+import { AuthGuard} from "./guards/auth.guard";
 import { UserComponent } from './components/user/user.component';
 import { UserService } from "./services/user.service";
 import { CompanyService } from "./services/company.service";
@@ -26,16 +26,16 @@ import { CompanyParametrizedListComponent } from "./components/company-parametri
 import { CompanyListComponent } from "./components/company-list/company-list.component";
 import { CompanyAvailableListComponent } from "./components/company-available-list/company-available-list.component";
 import { CompanyRegisterComponent } from "./components/company-register/company-register.component";
-import { CompanyInfoComponent} from "./components/company-info/company-info.component";
-import {RoomTypeService} from "./services/room-type.service";
-import {ProfileComponent} from "./components/profile/profile.component";
-import {ProfileService} from "./services/profile.service";
+import { CompanyInfoComponent } from "./components/company-info/company-info.component";
+import { RoomTypeService } from "./services/room-type.service";
+import { ProfileComponent } from "./components/profile/profile.component";
+import { ProfileService } from "./services/profile.service";
 import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
 import { Md2Module }  from 'md2';
-import {OrderService} from "./services/order.service";
+import { OrderService} from "./services/order.service";
 import { ServiceHistoryComponent } from './components/service-history/service-history.component';
 import { CommentComponent } from './components/comment/comment.component';
-import {CommentService} from "./services/comment.service";
+import { CommentService} from "./services/comment.service";
 import { OrderComponent } from './components/order/order.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
@@ -43,22 +43,24 @@ const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-//  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { roles: ['user']}},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'companyProfile', component: CompanyProfileComponent},
-  {path: 'companyList', component: CompanyListComponent},
   {path: 'companyRegister', component: CompanyRegisterComponent},
-  {path: 'users', component: UserComponent},
   {path: 'reservation', component: ReservationComponent},
-  {path: 'companyParametrizedList', component: CompanyParametrizedListComponent},
-  {path: 'companyList', component: CompanyListComponent},
-  {path: 'companyAvailableList', component: CompanyAvailableListComponent},
-  {path: 'companyInfo/:companyId', component: CompanyInfoComponent},
-  {path: 'serviceHistory', component: ServiceHistoryComponent},
-  {path: 'comment/:companyId', component: CommentComponent},
-  {path: 'orderDetails/:orderId', component: OrderDetailsComponent},
-  {path: 'orders', component: OrderComponent}
+  //Admin
+  {path: 'users', component: UserComponent, canActivate: [AuthGuard], data: { roles: ['admin']}},
+  {path: 'companyList', component: CompanyListComponent, canActivate: [AuthGuard], data: { roles: ['admin']}},
+  //Customer
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
+  {path: 'companyParametrizedList', component: CompanyParametrizedListComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
+  {path: 'companyAvailableList', component: CompanyAvailableListComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
+  {path: 'companyInfo/:companyId', component: CompanyInfoComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
+  {path: 'serviceHistory', component: ServiceHistoryComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
+  {path: 'comment/:companyId', component: CommentComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
+  {path: 'orderDetails/:orderId', component: OrderDetailsComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
+  //Company
+  {path: 'companyProfile', component: CompanyProfileComponent, canActivate: [AuthGuard], data: { roles: ['company']}},
+  {path: 'orders', component: OrderComponent, canActivate: [AuthGuard], data: { roles: ['company']}}
+
+ // {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { roles: ['user']}},
 
 ];
 
@@ -98,7 +100,7 @@ const appRoutes: Routes = [
   providers: [
     ValidateService,
     AuthService,
- //   AuthGuard,
+    AuthGuard,
     UserService,
     CompanyService,
     CleaningTypeService,

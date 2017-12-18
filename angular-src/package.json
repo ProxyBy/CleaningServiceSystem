@@ -25,6 +25,7 @@
     "angular2-jwt": "^0.2.3",
     "core-js": "^2.4.1",
     "md2": "0.0.29",
+    "moment": "^2.20.0",
     "ng2-file-upload": "^1.2.1",
     "ng2-simple-timepicker": "^0.1.11",
     "rxjs": "^5.5.2",

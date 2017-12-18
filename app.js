@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./config/passport')(passport);
+//require('./config/passportConfig')(passport);
 require('./routes/index')(app);
 
 //Error handler

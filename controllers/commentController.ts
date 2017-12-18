@@ -1,13 +1,6 @@
 import {Request, Response} from 'express';
-import {text} from "body-parser";
 
 const Comment = require('../models/comment');
-const express = require('express');
-const multer = require('multer');
-const router = express.Router();
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const config = require('../config/bdConfig');
 
 export class CommentController {
 
@@ -20,8 +13,8 @@ export class CommentController {
         });
 
         Comment.addNewComment(newComment, (err: any) => {
-            if(err){
-                res.json({success: false, msg:'Fail to add comment'});
+            if (err) {
+                res.json({success: false, msg: 'Fail to add comment'});
             } else {
                 res.json({success: true, msg: 'Comment was added'})
             }
@@ -30,8 +23,8 @@ export class CommentController {
 
     public getRaiting: Function = (req: Request, res: Response) => {
         Comment.getCompanyRating(req.body.companyId, (err: any, ratingList: any) => {
-            if(err){
-                res.json({success: false, msg:'Fail to get rating'});
+            if (err) {
+                res.json({success: false, msg: 'Fail to get rating'});
             } else {
                 let overallRating = this.countRating(ratingList);
                 res.json({success: true, rating: overallRating})
@@ -41,9 +34,9 @@ export class CommentController {
 
     public countRating: Function = (ratingList: any) => {
         let overallRating = 0;
-        for (let rating of ratingList){
-            overallRating = overallRating + rating ;
+        for (let rating of ratingList) {
+            overallRating = overallRating + rating;
         }
-        return overallRating/ratingList.size;
+        return overallRating / ratingList.size;
     };
 }

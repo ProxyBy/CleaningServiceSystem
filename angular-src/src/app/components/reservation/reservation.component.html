@@ -32,11 +32,10 @@
       <label><input type="checkbox" (change)="addDay('Saturday', $event.target.checked)" name="selectedType">Saturday</label>
     </div>
   </div>
- <!-- <div class="form-group">
+ <div class="form-group">
     <label>Estimated time to start cleaning</label>
-    <input type="text" [ngModel]="time" class="form-control" [ngClass]="custom-cls"
-           [ng2-simple-timepicker]="{disableTextInput: false,'timeFormat':'HH:mm',showDuration:false}"/>
-  </div>-->
+    <input type="time" [value]="cleaningRequest.time" (input)="cleaningRequest.time = $event.target.value" />
+  </div>
   <div class="form-group">
     <label>Planned regular cleaning</label>
     <select [(ngModel)]="cleaningRequest.regularity" [ngModelOptions]="{standalone: true}">

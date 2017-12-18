@@ -11,7 +11,6 @@ import {ProfileService} from "../../services/profile.service";
 })
 export class OrderDetailsComponent implements OnInit {
   orderId: any;
-  order: any;
   customer = {
     _id: null,
     username: null,
@@ -19,7 +18,8 @@ export class OrderDetailsComponent implements OnInit {
     phone: null,
   };
   order ={
-    cleaningTypeName: null
+    cleaningTypeName: null,
+    customerId: null
   };
 
 

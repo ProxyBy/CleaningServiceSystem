@@ -1,13 +1,7 @@
 import {Request, Response} from 'express';
 
-const RoomType = require('../models/roomType');
-const express = require('express');
-const multer = require('multer');
-const router = express.Router();
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const config = require('../config/bdConfig');
 const Order = require('../models/order');
+const Status = require('../config/userStatusEnum');
 
 export class OrderController {
 
@@ -24,21 +18,21 @@ export class OrderController {
             companyName: req.body.companyName,
             customerId: req.body.customerId,
             price: req.body.price,
-            status: "new"
+            status: Status.NEW
         });
         Order.addOrder(order, (err: any) => {
-            if(err){
-                res.json({success: false, msg:'Somthing went wrong'});
+            if (err) {
+                res.json({success: false, msg: 'Something went wrong'});
             } else {
-                res.json({success: true, msg:'Order was added'});
+                res.json({success: true, msg: 'Order was added'});
             }
         });
     };
 
     public getOrdersForCustomer: Function = (req: Request, res: Response) => {
         Order.getUserOrders(req.body.userId, (err: any, orders: any) => {
-            if(err){
-                res.json({success: false, msg:'Fail to get orders'});
+            if (err) {
+                res.json({success: false, msg: 'Fail to get orders'});
             } else {
                 res.json({success: true, orders: orders})
             }
@@ -48,8 +42,8 @@ export class OrderController {
 
     public getOrdersForCompany: Function = (req: Request, res: Response) => {
         Order.getCompanyOrders(req.body.companyId, (err: any, orders: any) => {
-            if(err){
-                res.json({success: false, msg:'Fail to get orders'});
+            if (err) {
+                res.json({success: false, msg: 'Fail to get orders'});
             } else {
                 res.json({success: true, orders: orders})
             }
@@ -58,8 +52,8 @@ export class OrderController {
 
     public getOrderInfo: Function = (req: Request, res: Response) => {
         Order.getOrder(req.body.orderId, (err: any, order: any) => {
-            if(err){
-                res.json({success: false, msg:'Fail to get order'});
+            if (err) {
+                res.json({success: false, msg: 'Fail to get order'});
             } else {
                 res.json({success: true, order: order})
             }

@@ -3,21 +3,21 @@ const config = require('../config/mailConfig');
 
 export class NotificationController {
 
-    public sendRegisterNotification(newUser: any){
+    public sendRegisterNotification(newUser: any) {
         let mailOpts = {
             from: config.user,
             replyTo: newUser.email,
             to: newUser.email,
-            subject: "Account activation" ,
+            subject: "Account activation",
             html: "You activation code: " + newUser.temproraryToken
         };
         this.sendMailNotification(mailOpts);
     }
 
-    public sendModerationNotification(newUser: any){
+    public sendModerationNotification(newUser: any) {
         let subject;
         let html;
-        if (newUser.status == "active"){
+        if (newUser.status == "active") {
             subject = "You Account was unlocked";
             html = "You can login";
         } else {
@@ -34,7 +34,7 @@ export class NotificationController {
         this.sendMailNotification(mailOpts);
     }
 
-    public sendDeleteNotification(newUser: any){
+    public sendDeleteNotification(newUser: any) {
         let subject = "You Account was deleted";
         let html = "You accaunt was delete. You didn't activate account. ";
         let mailOpts = {
@@ -61,7 +61,7 @@ export class NotificationController {
         smtpTransport.sendMail(mailOpts, function (error: any, response: any) {
             if (error) {
                 console.log(error);
-            }else {
+            } else {
                 console.log('Message sent: ' + response.message);
             }
             console.log('Closing Transport');

@@ -41,7 +41,6 @@ const OrderSchema = mongoose.Schema({
 
 const Order = module.exports = mongoose.model('order', OrderSchema);
 
-
 module.exports.getUserOrders = function(userId, callback){
     Order.find({customerId: userId},{}, callback);
 };

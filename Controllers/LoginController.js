@@ -1,107 +1,85 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const express = require('express');
+const util = require("util");
 const User = require('../models/user');
-const router = express.Router();
-const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/bdConfig');
+const passport = require('passport');
+const jwtOptions = require('../config/passportConfig');
+const JwtStrategy = require('passport-jwt').Strategy;
 class LoginController {
     constructor() {
-        /*  public callback: Function = (err: any, user: any) => {
-              if(err) throw err;
-              if(!user){
-                  return res.json({success: false, msg: 'User not found'});
-              }
-              User.comparePassword(password, user.password, (err: any, isMatch: boolean) => {
-                  if(err) throw err;
-                  if(isMatch){
-                      const token = jwt.sign({data:user}, config.secret, {
-                          expiresIn: 604800 // 1 week
-                      });
-      
-                      res.json({
-                          success: true,
-                          token: 'JWT '+token,
-                          user: {
-                              id: user._id,
-                              name: user.name,
-                              username: user.username,
-                              email: user.email,
-                              role: user.role
-                          }
-                      });
-                  } else {
-                      return res.json({success: false, msg: 'Wrong password'});
-                  }
-              });
-          };*/
-        // TODO вынести колбэк
+        this.checkAuthentication = (req, res, next) => {
+            passport.authenticate('jwt', { session: false }, (err, payload) => {
+                if (payload) {
+                    next();
+                }
+                else {
+                    res.json({ success: false, msg: 'Wrong JWT token' });
+                }
+            })(req, res, next);
+        };
+        this.comparePassword = (user, password, res) => {
+            if (!user) {
+                return res.json({ success: false, msg: 'User not found' });
+            }
+            const comparePassword = util.promisify(User.comparePassword);
+            comparePassword(password, user.password)
+                .then((isMatch) => {
+                if (isMatch) {
+                    const token = jwt.sign({ data: user }, config.secret, {
+                        expiresIn: 604800 // 1 week
+                    });
+                    res.json({
+                        success: true,
+                        token: 'JWT ' + token,
+                        user: {
+                            id: user._id,
+                            username: user.username,
+                            role: user.role
+                        },
+                        msg: "Hello " + user.username + " (" + user.role + ")"
+                    });
+                }
+                else {
+                    return res.json({ success: false, msg: 'Wrong password' });
+                }
+            });
+        };
         this.auth = (req, res) => {
             const password = req.body.password;
             if (req.body.email) {
-                User.getUserByEmail(req.body.email, (err, user) => {
-                    if (err)
-                        throw err;
-                    if (!user) {
-                        return res.json({ success: false, msg: 'User not found' });
-                    }
-                    User.comparePassword(password, user.password, (err, isMatch) => {
-                        if (err)
-                            throw err;
-                        if (isMatch) {
-                            const token = jwt.sign({ data: user }, config.secret, {
-                                expiresIn: 604800 // 1 week
-                            });
-                            res.json({
-                                success: true,
-                                token: 'JWT ' + token,
-                                user: {
-                                    id: user._id,
-                                    username: user.username,
-                                    role: user.role
-                                },
-                                msg: "Hello " + user.username + " (" + user.role + ")"
-                            });
-                        }
-                        else {
-                            return res.json({ success: false, msg: 'Wrong password' });
-                        }
-                    });
+                const getUserByEmail = util.promisify(User.getUserByEmail);
+                getUserByEmail(req.body.email)
+                    .then((user) => {
+                    this.comparePassword(user, password, res);
+                }, (error) => {
+                    return res.json({ success: false, msg: 'Something went wrong' });
                 });
             }
             else {
-                User.getUserByPhone(req.body.phone, (err, user) => {
-                    if (err)
-                        throw err;
-                    if (!user) {
-                        return res.json({ success: false, msg: 'User not found' });
-                    }
-                    User.comparePassword(password, user.password, (err, isMatch) => {
-                        if (err)
-                            throw err;
-                        if (isMatch) {
-                            const token = jwt.sign({ data: user }, config.secret, {
-                                expiresIn: 604800 // 1 week
-                            });
-                            res.json({
-                                success: true,
-                                token: 'JWT ' + token,
-                                user: {
-                                    id: user._id,
-                                    username: user.username,
-                                    role: user.role
-                                },
-                                msg: "Hello " + user.username + " (" + user.role + ")"
-                            });
-                        }
-                        else {
-                            return res.json({ success: false, msg: 'Wrong password' });
-                        }
-                    });
+                const getUserByPhone = util.promisify(User.getUserByPhone);
+                getUserByPhone(req.body.phone)
+                    .then((user) => {
+                    this.comparePassword(user, password, res);
+                }, (error) => {
+                    return res.json({ success: false, msg: 'Something went wrong' });
                 });
             }
         };
+        passport.use(new JwtStrategy(jwtOptions, (jwt_payload, done) => {
+            User.findOne({ id: jwt_payload.sub }, (err, user) => {
+                if (err) {
+                    return done(err, false);
+                }
+                if (user) {
+                    return done(null, user);
+                }
+                else {
+                    return done(null, false);
+                }
+            });
+        }));
     }
 }
 exports.LoginController = LoginController;

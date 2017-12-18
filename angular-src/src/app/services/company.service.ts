@@ -25,6 +25,7 @@ export class CompanyService {
   getAvailableCompanyList(){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', "fffffffghhhhhhhhh");
     return this.http.get('http://localhost:3000/companyAvailableList', {headers: headers})
       .map(res => res.json());
   }

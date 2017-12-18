@@ -59,6 +59,7 @@ export const routesV1: IRoute[] = [
         path: '/users',
         httpMethod: 'GET',
         middleware: [
+            loginController.checkAuthentication,
             customerController.getAlCustomers
         ]
     },
@@ -95,6 +96,7 @@ export const routesV1: IRoute[] = [
         path: '/companyAvailableList',
         httpMethod: 'GET',
         middleware: [
+            loginController.checkAuthentication,
             companyController.getCompanyAvailableList
         ]
     },
@@ -160,17 +162,5 @@ export const routesV1: IRoute[] = [
         middleware: [
             orderController.getOrderInfo
         ]
-    },
-
-
-    {
-        path: '/a',
-        httpMethod: 'GET',
-        middleware: [
-            customerController.checkAuthentication
-           // userController.auth,
-          //  userController.getProfile
-        ]
     }
-
 ];
