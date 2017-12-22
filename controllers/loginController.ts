@@ -13,7 +13,7 @@ export class LoginController {
 
     constructor() {
         passport.use(new JwtStrategy(jwtOptions, (jwt_payload: any, done: any) => {
-            User.findOne({id: jwt_payload.sub}, (err: any, user: any) => {
+            User.findOne({_id: jwt_payload.data._id}, (err: any, user: any) => {
                 if (err) {
                     return done(err, false);
                 }
@@ -39,6 +39,9 @@ export class LoginController {
     private comparePassword: Function = (user: any, password: any, res: Response) => {
         if (!user) {
             return res.json({success: false, msg: 'User not found'});
+        }
+        if (!password) {
+            return res.json({success: false, msg: 'Fill you password'});
         }
         const comparePassword = util.promisify(User.comparePassword);
         comparePassword(password, user.password)
@@ -90,6 +93,16 @@ export class LoginController {
                     }
                 );
         }
+    };
+
+    public accessControl: Function = (req: Request, res: Response, next: Function) => {
+        passport.authenticate('jwt', {session: false}, (err: Error, payload: any) => {
+            if (payload && (payload._id == req.body.userId || payload._id == req.body.companyId)) {
+                next();
+            } else {
+                res.json({success: false, msg: "You don't have access"});
+            }
+        })(req, res, next)
     }
 }
 

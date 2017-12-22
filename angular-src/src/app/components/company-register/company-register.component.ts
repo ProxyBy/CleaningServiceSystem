@@ -19,6 +19,7 @@ export class CompanyRegisterComponent implements OnInit {
   name: String;
   description: String;
   email: String;
+  address: String;
   serviceTypes: any[] = [];
   password: String;
   confirmPassword;
@@ -103,6 +104,7 @@ export class CompanyRegisterComponent implements OnInit {
       name: this.name,
       description: this.description,
       email: this.email,
+      address: this.address,
       cleaningTypes: this.selectedTypes,
       roomPrices: this.roomPrices,
       password: this.password,
@@ -131,7 +133,7 @@ export class CompanyRegisterComponent implements OnInit {
         this.flashMessageService.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/login']);
       } else {
-        this.flashMessageService.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/companyRegister'])
       }
     })

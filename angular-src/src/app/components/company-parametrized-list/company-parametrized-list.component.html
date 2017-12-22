@@ -1,5 +1,6 @@
 <div class="flex-container">
   <form class="flex-element" name="form">
+    <h2 class="page-header">Companies on request</h2>
     <table>
       <tr>
         <th>Company</th>
@@ -13,7 +14,7 @@
         <td>{{company.username}}</td>
         <td>{{company.logo}}</td>
         <td>{{company.address}}</td>
-        <td></td>
+        <td>{{company.comment}}</td>
         <td>{{company.approximatePrice}}</td>
         <td>
           <button class="btn btn-primary" (click)="openOrder(order, company._id)">Order</button>
@@ -63,6 +64,14 @@
       <div class="form-group">
         <label>Company</label>
         <input type="text" [(ngModel)]="selectedCompany.username"  name="username" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Start time </label>
+        <input type="text" [(ngModel)]="cleaningRequest.time" name="cleaningRequest.time" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Due date </label>
+        <input type="text" [(ngModel)]="cleaningRequest.dueDate" name="cleaningRequest.dueDate" class="form-control">
       </div>
       <div class="form-group">
         <label>Price</label>

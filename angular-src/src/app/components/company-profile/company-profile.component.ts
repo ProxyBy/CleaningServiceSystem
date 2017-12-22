@@ -5,6 +5,7 @@ import {ProfileService} from "../../services/profile.service";
 import {AuthService} from "../../services/auth.service";
 import {CleaningTypeService} from "../../services/cleaning-type.service";
 import {RoomTypeService} from "../../services/room-type.service";
+import {CommentService} from "../../services/comment.service";
 
 @Component({
   selector: 'app-company-profile',
@@ -17,12 +18,14 @@ export class CompanyProfileComponent implements OnInit {
     logo: null,
     username: null,
     description: null,
+    address: null,
     email: null,
     cleaningTypes: null,
     oldPassword: null,
     roomPrices: null,
     password: null,
-    confirmPassword: null
+    confirmPassword: null,
+    rating: null
   };
   cleaningTypes;
   roomTypes: any[] = [];
@@ -36,7 +39,8 @@ export class CompanyProfileComponent implements OnInit {
     private validateService: ValidateService,
     private flashMessageService: FlashMessagesService,
     private cleaningTypeService: CleaningTypeService,
-    private roomTypeService: RoomTypeService
+    private roomTypeService: RoomTypeService,
+    private commentService: CommentService
 
   ) { }
 
@@ -45,6 +49,16 @@ export class CompanyProfileComponent implements OnInit {
       this.company = data.user;
       this.selectedTypes = this.company.cleaningTypes;
       this.roomPrices = this.company.roomPrices;
+      this.commentService.getComments(this.company._id).subscribe((data => {
+        if (data.success) {
+          this.company.comments = data.commentList;
+        }
+      });
+      this.commentService.getRaiting(this.company._id).subscribe((data => {
+        if (data.success) {
+          this.company.rating = data.rating;
+        }
+      });
     });
     this.cleaningTypeService.getCleaningTypes().subscribe(data => {
       this.cleaningTypes = data.types;
@@ -130,9 +144,6 @@ export class CompanyProfileComponent implements OnInit {
 
     this.company.roomPrices = this.roomPrices;
     this.company.cleaningTypes = this.selectedTypes;
-
-    console.log(this.company)
-
     if(!this.validateService.validateProfileCompany(this.company)){
       this.flashMessageService.show('Please fill all required fields', {cssClass: 'alert-danger', timeout: 3000});
       return false;
@@ -153,7 +164,7 @@ export class CompanyProfileComponent implements OnInit {
       if(data.success){
         this.flashMessageService.show(data.msg, {cssClass: 'alert-success', timeout: 3000});
       } else {
-        this.flashMessageService.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
       }
     })
   }

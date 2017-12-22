@@ -1,6 +1,9 @@
 import {Request, Response} from 'express';
+import {DateUtills} from "../services/dateUtills";
+import * as util from "util";
 
 const User = require('../models/user');
+const Order = require('../models/order');
 const Role = require('../config/rolesEnum');
 const Status = require('../config/userStatusEnum');
 
@@ -13,6 +16,7 @@ export class CompanyController {
             username: req.body.name,
             description: req.body.description,
             email: req.body.email,
+            address: req.body.address,
             password: req.body.password,
             cleaningTypes: req.body.cleaningTypes,
             roomPrices: req.body.roomPrices,
@@ -51,12 +55,15 @@ export class CompanyController {
     };
 
     public getCompanyParametrizedList: Function = (req: Request, res: Response) => {
+        let dateUtills = new DateUtills();
+        let companyParametrizedList: any[] = [];
         var criteria = {
             cleaningType: JSON.parse(req.body.selectedType)._id,
-            roomDescriptions: JSON.parse(req.body.roomDescriptions)
-        };
+            roomDescriptions: JSON.parse(req.body.roomDescriptions),
+            dates: dateUtills.getDatesFromDays(req.body.selectedDays, req.body.regularity, req.body.dueDate),
 
-        User.getParametrizedCompany(criteria, (err: any, companies: any) => {
+        };
+        User.getParametrizedCompany(criteria, async (err: any, companies: any) => {
             if (err) {
                 res.json({success: false, msg: 'Fail to get cleaning company'});
             } else {
@@ -65,16 +72,34 @@ export class CompanyController {
                     var parametrizedCompany = {
                         _id: company._id,
                         username: company.username,
-                        approximatePrice: this.addApproximatePrice(company, criteria)
+                        logo: company.logo,
+                        address: company.address,
+                        approximatePrice: this.countPrice(company, criteria)
                     };
                     parametrizedCompanies.push(parametrizedCompany);
                 }
-                res.json({success: true, company: parametrizedCompanies})
+                for (let company of parametrizedCompanies) {
+                    console.log(criteria.dates);
+                    await Order.getCompanyOrdersByDates(company._id, criteria.dates)
+                        .then(
+                            (result: any) => {
+                                if (result.length == 0){
+                                    console.log("add");
+                                    companyParametrizedList.push(company);
+                                }
+                            },
+                            (error: any) => {
+                                console.log("fail");
+                                return res.json({success: false, msg: 'Fail to update user'});
+                            }
+                        );
+                }
+                res.json({success: true, company: companyParametrizedList});
             }
         });
     };
 
-    public addApproximatePrice: Function = (company: any, criteria: any) => {
+    public countPrice: Function = (company: any, criteria: any) => {
         let approximatePrice = 0;
         for (let roomPrice of company.roomPrices) {
             for (let roomDescription of criteria.roomDescriptions) {
@@ -90,6 +115,20 @@ export class CompanyController {
             }
         }
         return approximatePrice;
+    };
+
+    public getPrice: Function = (req: Request, res: Response) => {
+        var criteria = {
+            cleaningType: JSON.parse(req.body.selectedType),
+            roomDescriptions: JSON.parse(req.body.roomDescriptions)
+        };
+        User.getSecuredUserById(req.body.companyId, (err: any, company: any) => {
+            if (err) {
+                res.json({success: false, msg: 'Fail to get user'});
+            } else {
+                res.json({success: true, price: this.countPrice(company, criteria)});
+            }
+        });
     };
 
     public saveUpdatedProfile: Function = (req: Request, res: Response) => {

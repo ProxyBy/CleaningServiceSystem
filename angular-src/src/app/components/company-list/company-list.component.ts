@@ -72,7 +72,7 @@ export class CompanyListComponent implements OnInit {
           if(data.success){
             this.flashMessageService.show(data.msg, {cssClass: 'alert-success', timeout: 3000});
           } else {
-            this.flashMessageService.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+            this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
           }
         })
       }

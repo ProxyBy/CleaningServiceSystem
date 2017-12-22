@@ -37,6 +37,21 @@
       </div>
     </div>
 
+      <div class="form-group">
+        <label>Comments:</label>
+            <table>
+              <tr>
+                <th>Comment</th>
+                <th>Rating</th>
+              </tr>
+              <tr *ngFor="let comment of company.comments" >
+                <td>{{comment.text}}</td>
+                <td>{{comment.rating}}</td>
+              </tr>
+            </table>
+
+      </div>
+
       </fieldset>
 
     <button class="btn btn-dafault" (click)="comment();">

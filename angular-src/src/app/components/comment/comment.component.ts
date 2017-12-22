@@ -35,9 +35,9 @@ export class CommentComponent implements OnInit {
     this.comment.authorId = this.authService.getId();
     this.commentService.addComment(this.comment).subscribe(data => {
       if(data.success){
-        this.flashMessageService.show('Your comment was added', {cssClass: 'alert-success', timeout: 3000});
+        this.flashMessageService.show(data.msg, {cssClass: 'alert-success', timeout: 3000});
       } else {
-        this.flashMessageService.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
       }
       this.router.navigate(['/companyInfo', this.comment.companyId]);
     })

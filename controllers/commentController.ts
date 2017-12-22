@@ -32,11 +32,21 @@ export class CommentController {
         });
     };
 
+    public getComments: Function = (req: Request, res: Response) => {
+        Comment.getCompanyRating(req.body.companyId, (err: any, commentList: any) => {
+            if (err) {
+                res.json({success: false, msg: 'Fail to get rating'});
+            } else {
+                res.json({success: true, commentList: commentList})
+            }
+        });
+    };
+
     public countRating: Function = (ratingList: any) => {
         let overallRating = 0;
         for (let rating of ratingList) {
-            overallRating = overallRating + rating;
+            overallRating = overallRating + rating.rating;
         }
-        return overallRating / ratingList.size;
+        return overallRating / ratingList.length;
     };
 }

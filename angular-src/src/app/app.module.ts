@@ -44,21 +44,22 @@ const appRoutes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'companyRegister', component: CompanyRegisterComponent},
+  {path: 'reservation/:company', component: ReservationComponent},
   {path: 'reservation', component: ReservationComponent},
+  {path: 'companyParametrizedList', component: CompanyParametrizedListComponent},
   //Admin
   {path: 'users', component: UserComponent, canActivate: [AuthGuard], data: { roles: ['admin']}},
   {path: 'companyList', component: CompanyListComponent, canActivate: [AuthGuard], data: { roles: ['admin']}},
   //Customer
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
-  {path: 'companyParametrizedList', component: CompanyParametrizedListComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
   {path: 'companyAvailableList', component: CompanyAvailableListComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
   {path: 'companyInfo/:companyId', component: CompanyInfoComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
   {path: 'serviceHistory', component: ServiceHistoryComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
   {path: 'comment/:companyId', component: CommentComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
-  {path: 'orderDetails/:orderId', component: OrderDetailsComponent, canActivate: [AuthGuard], data: { roles: ['customer']}},
   //Company
   {path: 'companyProfile', component: CompanyProfileComponent, canActivate: [AuthGuard], data: { roles: ['company']}},
-  {path: 'orders', component: OrderComponent, canActivate: [AuthGuard], data: { roles: ['company']}}
+  {path: 'orders', component: OrderComponent, canActivate: [AuthGuard], data: { roles: ['company']}},
+  {path: 'orderDetails/:orderId', component: OrderDetailsComponent, canActivate: [AuthGuard], data: { roles: ['company']}},
 
  // {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { roles: ['user']}},
 

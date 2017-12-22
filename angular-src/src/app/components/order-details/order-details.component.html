@@ -38,13 +38,43 @@
         <label>Price</label>
         <input type="text" [(ngModel)]="order.price" name="price" class="form-control">
       </div>
+      <div class="form-group">
+        <label>Status</label>
+        <input type="text" [(ngModel)]="order.status" name="status" class="form-control">
+      </div>
     </fieldset>
-
-    <button class="btn btn-dafault" (click)="cancel();">
-      <span>Cancel</span>
-    </button>
-    <button class="btn btn-primary" (click)="accept()">
-      <span>Accept</span>
-    </button>
+    <button class="btn btn-primary" *ngIf="order.status != 'new'" (click)="openAccept(accept)">Accept</button>
+    <button class="btn btn-dafault" *ngIf="order.status != 'new'" (click)="openReject(reject)">Reject</button>
   </form>
 </div>
+
+
+<md2-dialog #accept>
+  <md2-dialog-title>Confirm you action</md2-dialog-title>
+  <div class="form-group">
+    <label>Would you like to accept order? </label>
+  </div>
+  <md2-dialog-footer>
+    <button  class="btn btn-primary" (click)="acceptOrder(accept)">Ok</button>
+    <button class="btn btn-dafault" (click)="cancel(accept)">Cancel</button>
+  </md2-dialog-footer>
+</md2-dialog>
+
+<md2-dialog #reject>
+  <md2-dialog-title>Confirm you action</md2-dialog-title>
+  <div class="form-group">
+    <label> Would you like to reject order?  </label>
+    <label>Please fill the reason:</label>
+    <input type="textarea" [(ngModel)]="rejectReason" name="rejectReason" id="rejectReason" class="form-control" required #rejectModel="ngModel">
+    <div *ngIf="rejectModel.invalid" class="alert alert-danger">
+      <div *ngIf="rejectModel.errors.required">
+        Reason is required.
+      </div>
+    </div>
+  </div>
+  <md2-dialog-footer>
+    <button class="btn btn-primary" (click)="rejectOrder(reject, rejectReason)">Ok</button>
+    <button class="btn btn-dafault" (click)="cancel(reject)">Cancel</button>
+  </md2-dialog-footer>
+</md2-dialog>
+

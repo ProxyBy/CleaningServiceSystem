@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Md2Dialog, Md2Module} from 'md2';
 import {AuthService} from "../../services/auth.service";
 import {OrderService} from "../../services/order.service";
+import {CommentService} from "../../services/comment.service";
 
 @Component({
   selector: 'app-company-parametrized-list',
@@ -29,7 +30,8 @@ export class CompanyParametrizedListComponent implements OnInit {
     private flashMessageService: FlashMessagesService,
     private activeRoute: ActivatedRoute,
     private authService: AuthService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private commentService: CommentService
   ) { }
 
   ngOnInit() {
@@ -40,8 +42,15 @@ export class CompanyParametrizedListComponent implements OnInit {
       this.companyService.getCompanyParametrizedList(params).subscribe(data => {
         if(data.success){
           this.companies = data.company;
+          for (let i = 0; i < this.companies.length; i++) {
+            this.commentService.getRaiting(this.companies[i]._id).subscribe((data => {
+              if (data.success) {
+                this.companies[i].comment = data.rating;
+              }
+            });
+          }
         } else {
-          this.flashMessageService.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+          this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
         }
       })
     });
@@ -78,7 +87,7 @@ export class CompanyParametrizedListComponent implements OnInit {
       if(data.success){
         dialog.close();
       } else {
-        this.flashMessageService.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
       }
     });
   }

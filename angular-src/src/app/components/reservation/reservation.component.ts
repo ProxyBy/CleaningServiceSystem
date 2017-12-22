@@ -6,6 +6,9 @@ import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
 import {AuthService} from "../../services/auth.service";
 import {RoomTypeService} from "../../services/room-type.service";
+import {CompanyService} from "../../services/company.service";
+import {Md2Dialog} from "md2";
+import {OrderService} from "../../services/order.service";
 
 @Component({
   selector: 'app-reservation',
@@ -20,7 +23,10 @@ export class ReservationComponent implements OnInit {
   cleaningRequest = {
     selectedDays: [],
     roomDescriptions: null,
-    selectedType: null
+    selectedType: null,
+    companyId: null,
+    dueDate: null,
+    time: null
   };
   roomDescriptions: any[] = [];
 
@@ -29,13 +35,77 @@ export class ReservationComponent implements OnInit {
     name: null
   };
 
+  order: any;
+  selectedCompany = {
+    _id: null,
+    username: null,
+    approximatePrice: null
+  };
+
 
   constructor(
     private cleaningTypeService: CleaningTypeService,
     private roomTypeService: RoomTypeService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    private companyService: CompanyService,
+    private orderService: OrderService
   ) { }
+
+
+  ngOnInit() {
+    this.activeRoute.params.subscribe(params => {
+      this.selectedCompany = params;
+    });
+    this.cleaningTypeService.getCleaningTypes().subscribe(data => {
+      this.cleaningTypes = data.types;
+    });
+    this.roomTypeService.getRoomTypes().subscribe(data => {
+      this.roomTypes = data.types;
+      this.roomDescriptions = data.types;
+    });
+  }
+
+  openOrder(dialog: Md2Dialog) {
+    let company = {
+      companyId: this.selectedCompany._id,
+      selectedType: this.selectedType._id;
+      roomDescriptions: JSON.stringify(this.roomDescriptions)
+    }
+    this.companyService.getPrice(company).subscribe(data => {
+      this.order = {
+        cleaningTypeId: this.selectedType._id,
+        cleaningTypeName: this.addNameOfCleaningtype(),
+        roomDescriptions: JSON.stringify(this.roomDescriptions),
+        address: this.cleaningRequest.address,
+        selectedDays: this.cleaningRequest.selectedDays,
+        regularity: this.cleaningRequest.regularity,
+        email: this.cleaningRequest.email,
+        companyId: this.selectedCompany._id,
+        companyName: this.selectedCompany.username,
+        customerId: this.authService.getId(),
+        price: data.price,
+        dueDate: this.cleaningRequest.dueDate,
+        time: this.cleaningRequest.time
+      };
+      dialog.open();
+    });
+  }
+
+  cancel(dialog: any) {
+    dialog.close();
+  }
+
+  confirmOrder(dialog: any) {
+    this.orderService.order(this.order).subscribe(data => {
+      if(data.success){
+        dialog.close();
+      } else {
+        this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
+      }
+    });
+  }
 
   onViewOffersSubmit(){
     this.cleaningRequest.roomDescriptions = JSON.stringify(this.roomDescriptions);
@@ -43,6 +113,7 @@ export class ReservationComponent implements OnInit {
     this.cleaningRequest.selectedType = JSON.stringify(this.selectedType);
     this.router.navigate(['/companyParametrizedList'], {queryParams:  this.cleaningRequest});
   }
+
 
   addNameOfCleaningtype(){
     for (let cleaningType of this.cleaningTypes){
@@ -59,16 +130,6 @@ export class ReservationComponent implements OnInit {
       }
     }
 
-  }
-
-  ngOnInit() {
-    this.cleaningTypeService.getCleaningTypes().subscribe(data => {
-      this.cleaningTypes = data.types;
-    });
-    this.roomTypeService.getRoomTypes().subscribe(data => {
-      this.roomTypes = data.types;
-      this.roomDescriptions = data.types;
-    });
   }
 
   addDay(name:string, isChecked: boolean) {

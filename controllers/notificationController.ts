@@ -69,4 +69,17 @@ export class NotificationController {
         });
     };
 
+    public sendOrderNotification(newOrder: any) {
+        let subject = "You order was updated";
+        let html = "You order was updated. And now has status " + newOrder.status + " " + newOrder.rejectReason;
+        let mailOpts = {
+            from: "Cleaning Service",
+            replyTo: newOrder.email,
+            to: newOrder.email,
+            subject: subject,
+            html: html
+        };
+        this.sendMailNotification(mailOpts);
+    }
+
 }

@@ -22,6 +22,7 @@ export const routesV1: IRoute[] = [
         path: '/profile',
         httpMethod: 'POST',
         middleware: [
+            loginController.checkAuthentication,
             profileController.getProfile
         ]
     },
@@ -29,6 +30,8 @@ export const routesV1: IRoute[] = [
         path: '/updateUserProfile',
         httpMethod: 'POST',
         middleware: [
+            loginController.checkAuthentication,
+            loginController.accessControl,
             profileController.updateProfile,
             customerController.saveUpdatedProfile
         ]
@@ -37,6 +40,8 @@ export const routesV1: IRoute[] = [
         path: '/updateCompanyProfile',
         httpMethod: 'POST',
         middleware: [
+            loginController.checkAuthentication,
+            loginController.accessControl,
             profileController.updateProfile,
             companyController.saveUpdatedProfile
         ]
@@ -60,6 +65,7 @@ export const routesV1: IRoute[] = [
         httpMethod: 'GET',
         middleware: [
             loginController.checkAuthentication,
+            loginController.accessControl,
             customerController.getAlCustomers
         ]
     },
@@ -67,6 +73,8 @@ export const routesV1: IRoute[] = [
         path: '/company',
         httpMethod: 'GET',
         middleware: [
+            loginController.checkAuthentication,
+            loginController.accessControl,
             companyController.getAllCompany
         ]
     },
@@ -111,6 +119,8 @@ export const routesV1: IRoute[] = [
         path: '/profileModeration',
         httpMethod: 'POST',
         middleware: [
+            loginController.checkAuthentication,
+            loginController.accessControl,
             profileController.profileModeration
         ]
     },
@@ -139,6 +149,8 @@ export const routesV1: IRoute[] = [
         path: '/getOrders',
         httpMethod: 'POST',
         middleware: [
+            loginController.checkAuthentication,
+            loginController.accessControl,
             orderController.getOrdersForCustomer
         ]
     },
@@ -146,6 +158,8 @@ export const routesV1: IRoute[] = [
         path: '/getCompanyOrders',
         httpMethod: 'POST',
         middleware: [
+            loginController.checkAuthentication,
+            loginController.accessControl,
             orderController.getOrdersForCompany
         ]
     },
@@ -153,6 +167,7 @@ export const routesV1: IRoute[] = [
         path: '/addComment',
         httpMethod: 'POST',
         middleware: [
+            loginController.checkAuthentication,
             commentController.addComment
         ]
     },
@@ -160,7 +175,42 @@ export const routesV1: IRoute[] = [
         path: '/getOrderInfo',
         httpMethod: 'POST',
         middleware: [
+            loginController.checkAuthentication,
             orderController.getOrderInfo
         ]
+    },
+    {
+        path: '/getRaiting',
+        httpMethod: 'POST',
+        middleware: [
+            loginController.checkAuthentication,
+            commentController.getRaiting
+        ]
+    },
+    {
+        path: '/getComments',
+        httpMethod: 'POST',
+        middleware: [
+            loginController.checkAuthentication,
+            commentController.getComments
+        ]
+    },
+    {
+        path: '/getPrice',
+        httpMethod: 'POST',
+        middleware: [
+            loginController.checkAuthentication,
+            companyController.getPrice
+        ]
+    },
+    {
+        path: '/updateOrder',
+        httpMethod: 'POST',
+        middleware: [
+            loginController.checkAuthentication,
+            loginController.accessControl,
+            orderController.updateOrder
+        ]
     }
+
 ];

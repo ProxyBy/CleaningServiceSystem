@@ -3,6 +3,7 @@ import {FlashMessagesService} from "angular2-flash-messages";
 import {ActivatedRoute, Router} from '@angular/router';
 import {OrderService} from "../../services/order.service";
 import {ProfileService} from "../../services/profile.service";
+import {Md2Dialog} from "md2";
 
 @Component({
   selector: 'app-order-details',
@@ -19,8 +20,17 @@ export class OrderDetailsComponent implements OnInit {
   };
   order ={
     cleaningTypeName: null,
-    customerId: null
+    customerId: null,
+    status: null
   };
+  rejectReason: null;
+  updatedOrder = {
+    email: null,
+    orderId: null,
+    companyId: null,
+    status: null,
+    rejectReason: null
+  }
 
 
   constructor(
@@ -36,23 +46,59 @@ export class OrderDetailsComponent implements OnInit {
       this.orderService.getOrderInfo(this.orderId).subscribe(data => {
         if(data.success){
           this.order = data.order;
+          this.updatedOrder.companyId = this.order.companyId;
+          this.updatedOrder.orderId = this.order._id;
+          this.updatedOrder.email = this.order.email;
           this.profileService.getProfile({_id: this.order.customerId}).subscribe(data => {
             this.customer = data.user;
-            console.log(this.customer);
           });
-          console.log(this.order);
         } else {
-          this.flashMessageService.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+          this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
         }
       });
     });
   }
 
-  accept(){
-
+  openAccept(dialog: Md2Dialog) {
+    dialog.open();
   }
 
-  cancel(){
-
+  acceptOrder(dialog: Md2Dialog){
+    this.updatedOrder.status = "approved";
+    this.updatedOrder.rejectReason = null;
+    this.orderService.updateOrder(this.updatedOrder).subscribe(data => {
+      if(data.success){
+        this.flashMessageService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
+      } else {
+        this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
+      }
+    });
+    dialog.close();
   }
+
+  openReject(dialog: Md2Dialog) {
+    dialog.open();
+  }
+
+  rejectOrder(dialog: Md2Dialog, rejectReason: any){
+    if (this.rejectReason !=null && this.rejectReason.length != null) {
+      this.updatedOrder.status = "canceled";
+      this.updatedOrder.rejectReason = rejectReason;
+      this.orderService.updateOrder(this.updatedOrder).subscribe(data => {
+        if(data.success){
+          this.flashMessageService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
+        } else {
+          this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
+        }
+      });
+      dialog.close();
+    }
+  }
+
+  cancel(dialog: any) {
+    this.updatedOrder.status = null;
+    this.updatedOrder.rejectReason = null;
+    dialog.close();
+  }
+
 }

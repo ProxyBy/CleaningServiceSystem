@@ -52,13 +52,15 @@ export class AuthService {
     return localStorage.getItem('user_id');
   }
 
+  getToken(){
+    return localStorage.getItem('id_token');
+  }
+
   /*  getUser(){
     return localStorage.getItem('user');
   }*/
 
-/*  getToken(){
-    return localStorage.getItem('id_token');
-  }*/
+
 
   /*  getProfile(){
       let headers = new Headers();

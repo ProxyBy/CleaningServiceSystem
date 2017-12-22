@@ -23,6 +23,9 @@ class LoginController {
             if (!user) {
                 return res.json({ success: false, msg: 'User not found' });
             }
+            if (!password) {
+                return res.json({ success: false, msg: 'Fill you password' });
+            }
             const comparePassword = util.promisify(User.comparePassword);
             comparePassword(password, user.password)
                 .then((isMatch) => {
@@ -67,8 +70,18 @@ class LoginController {
                 });
             }
         };
+        this.accessControl = (req, res, next) => {
+            passport.authenticate('jwt', { session: false }, (err, payload) => {
+                if (payload && (payload._id == req.body.userId || payload._id == req.body.companyId)) {
+                    next();
+                }
+                else {
+                    res.json({ success: false, msg: "You don't have access" });
+                }
+            })(req, res, next);
+        };
         passport.use(new JwtStrategy(jwtOptions, (jwt_payload, done) => {
-            User.findOne({ id: jwt_payload.sub }, (err, user) => {
+            User.findOne({ _id: jwt_payload.data._id }, (err, user) => {
                 if (err) {
                     return done(err, false);
                 }

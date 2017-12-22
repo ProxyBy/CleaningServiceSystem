@@ -1,3 +1,4 @@
+const Status = require('../config/orderStatusEnum');
 const mongoose = require('mongoose');
 
 const OrderSchema = mongoose.Schema({
@@ -36,6 +37,18 @@ const OrderSchema = mongoose.Schema({
     },
     status: {
         type: String
+    },
+    rejectReason: {
+        type: String
+    },
+    dates: {
+        type: String
+    },
+    time: {
+        type: String
+    },
+    dueDate: {
+        type: String
     }
 });
 
@@ -49,6 +62,28 @@ module.exports.getCompanyOrders = function(companyId, callback){
     Order.find({companyId: companyId},{}, callback);
 };
 
+module.exports.getCompanyOrdersByDates = function(companyId, dates){
+    console.log(dates);
+ return new Promise((resolve, reject) => {
+     resolve(Order.find({companyId: companyId, dates: dates},{}));
+ });
+};
+
+
+/*
+module.exports.encryptPassword = function (password) {
+    return new Promise((resolve, reject) => {
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(password, salt, (err, hash) => {
+                if (err) reject(err);
+                resolve(hash);
+            });
+        });
+    });
+};
+*/
+
+
 module.exports.getOrder = function(orderId, callback){
     Order.findById(orderId,{}, callback);
 };
@@ -56,4 +91,24 @@ module.exports.getOrder = function(orderId, callback){
 module.exports.addOrder = function(order, callback){
     order.save(callback);
 };
+
+module.exports.updateOrderStatus = function (newOrder, callback) {
+    Order.findByIdAndUpdate(newOrder._id, {
+        $set: {
+            companyId: newOrder.companyId,
+            status: newOrder.status,
+            rejectReason: newOrder.rejectReason
+        }
+    }, {new: false}, callback);
+};
+
+/*module.exports.getOrdersByDatesAndCompany = function (dates, callback) {
+    Order.find({
+   //     'dates': dates
+  //      'status': Status.APPROVED
+    }, {}).populate('user', {}).exec(callback);
+
+};*/
+
+
 

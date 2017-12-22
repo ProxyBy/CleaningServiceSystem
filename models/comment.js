@@ -11,7 +11,7 @@ const CommentSchema = mongoose.Schema({
         type: String
     },
     rating: {
-        type: String
+        type: Number
     }
 });
 

@@ -23,6 +23,9 @@ const UsersSchema = mongoose.Schema({
     logo: {
         type: String
     },
+    address: {
+        type: String
+    },
     description: {
         type: String
     },
