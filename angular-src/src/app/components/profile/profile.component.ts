@@ -38,7 +38,6 @@ export class ProfileComponent implements OnInit {
   }
 
   save() {
-    console.log(this.user)
     if(this.user.username == undefined || this.user.oldPassword == undefined){
       this.flashMessageService.show('Please fill all required fields', {cssClass: 'alert-danger', timeout: 3000});
       return false;

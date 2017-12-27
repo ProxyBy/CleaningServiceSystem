@@ -79,14 +79,10 @@ export class CompanyController {
                     parametrizedCompanies.push(parametrizedCompany);
                 }
                 for (let company of parametrizedCompanies) {
-                    console.log(company);
                     await Order.getCompanyOrdersByDates(company._id, criteria.dates)
                         .then(
                             (result: any) => {
                                 if (result.length == 0){
-                                    console.log(result.length);
-                                    console.log("add");
-                                    console.log(result);
                                     companyParametrizedList.push(company);
                                 }
                             },

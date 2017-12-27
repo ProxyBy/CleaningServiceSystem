@@ -31,7 +31,6 @@ export class DateUtills {
           }
 
           while (start < end) {
-              console.log(start);
               allDates.push(start);
               var newDate = start.setDate(start.getDate() + 1);
               start = new Date(newDate);
