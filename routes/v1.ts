@@ -65,7 +65,6 @@ export const routesV1: IRoute[] = [
         httpMethod: 'GET',
         middleware: [
             loginController.checkAuthentication,
-            loginController.accessControl,
             customerController.getAlCustomers
         ]
     },
@@ -74,7 +73,6 @@ export const routesV1: IRoute[] = [
         httpMethod: 'GET',
         middleware: [
             loginController.checkAuthentication,
-            loginController.accessControl,
             companyController.getAllCompany
         ]
     },
@@ -120,7 +118,6 @@ export const routesV1: IRoute[] = [
         httpMethod: 'POST',
         middleware: [
             loginController.checkAuthentication,
-            loginController.accessControl,
             profileController.profileModeration
         ]
     },

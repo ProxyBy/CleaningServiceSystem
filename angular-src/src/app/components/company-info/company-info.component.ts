@@ -49,11 +49,11 @@ export class CompanyInfoComponent implements OnInit {
         this.company = data.user;
         this.selectedTypes = this.company.cleaningTypes;
         this.roomPrices = this.company.roomPrices;
-        this.commentService.getComments(this.company._id).subscribe((data => {
+        this.commentService.getComments(this.company._id).subscribe(data => {
           if (data.success) {
             this.company.comments = data.commentList;
           }
-        });
+        })
       });
       this.cleaningTypeService.getCleaningTypes().subscribe(data => {
         this.cleaningTypes = data.types;

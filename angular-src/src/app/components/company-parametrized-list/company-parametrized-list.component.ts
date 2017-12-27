@@ -43,11 +43,11 @@ export class CompanyParametrizedListComponent implements OnInit {
         if(data.success){
           this.companies = data.company;
           for (let i = 0; i < this.companies.length; i++) {
-            this.commentService.getRaiting(this.companies[i]._id).subscribe((data => {
+            this.commentService.getRaiting(this.companies[i]._id).subscribe(data => {
               if (data.success) {
                 this.companies[i].comment = data.rating;
               }
-            });
+            })
           }
         } else {
           this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
@@ -82,10 +82,13 @@ export class CompanyParametrizedListComponent implements OnInit {
       companyName: this.selectedCompany.username,
       customerId: this.authService.getId(),
       price: this.selectedCompany.approximatePrice,
+      dueDate: this.cleaningRequest.dueDate,
+      time: this.cleaningRequest.time
     };
     this.orderService.order(this.order).subscribe(data => {
       if(data.success){
         dialog.close();
+        this.flashMessageService.show(data.msg, {cssClass: 'alert-success', timeout: 3000});
       } else {
         this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
       }

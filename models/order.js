@@ -14,9 +14,9 @@ const OrderSchema = mongoose.Schema({
     address: {
         type: String
     },
-    days: {
+    days: [{
         type: String
-    },
+    }],
     regularity: {
         type: String
     },
@@ -41,9 +41,9 @@ const OrderSchema = mongoose.Schema({
     rejectReason: {
         type: String
     },
-    dates: {
+    dates: [{
         type: String
-    },
+    }],
     time: {
         type: String
     },
@@ -54,41 +54,25 @@ const OrderSchema = mongoose.Schema({
 
 const Order = module.exports = mongoose.model('order', OrderSchema);
 
-module.exports.getUserOrders = function(userId, callback){
-    Order.find({customerId: userId},{}, callback);
+module.exports.getUserOrders = function (userId, callback) {
+    Order.find({customerId: userId}, {}, callback);
 };
 
-module.exports.getCompanyOrders = function(companyId, callback){
-    Order.find({companyId: companyId},{}, callback);
+module.exports.getCompanyOrders = function (companyId, callback) {
+    Order.find({companyId: companyId}, {}, callback);
 };
 
-module.exports.getCompanyOrdersByDates = function(companyId, dates){
-    console.log(dates);
- return new Promise((resolve, reject) => {
-     resolve(Order.find({companyId: companyId, dates: dates},{}));
- });
-};
-
-
-/*
-module.exports.encryptPassword = function (password) {
+module.exports.getCompanyOrdersByDates = function (companyId, dates) {
     return new Promise((resolve, reject) => {
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(password, salt, (err, hash) => {
-                if (err) reject(err);
-                resolve(hash);
-            });
-        });
+        resolve(Order.find({companyId: companyId, dates: {"$in":dates}, status: Status.APPROVED}, {}));
     });
 };
-*/
 
-
-module.exports.getOrder = function(orderId, callback){
-    Order.findById(orderId,{}, callback);
+module.exports.getOrder = function (orderId, callback) {
+    Order.findById(orderId, {}, callback);
 };
 
-module.exports.addOrder = function(order, callback){
+module.exports.addOrder = function (order, callback) {
     order.save(callback);
 };
 
@@ -101,14 +85,6 @@ module.exports.updateOrderStatus = function (newOrder, callback) {
         }
     }, {new: false}, callback);
 };
-
-/*module.exports.getOrdersByDatesAndCompany = function (dates, callback) {
-    Order.find({
-   //     'dates': dates
-  //      'status': Status.APPROVED
-    }, {}).populate('user', {}).exec(callback);
-
-};*/
 
 
 

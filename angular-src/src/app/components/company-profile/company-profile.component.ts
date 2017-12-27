@@ -25,7 +25,8 @@ export class CompanyProfileComponent implements OnInit {
     roomPrices: null,
     password: null,
     confirmPassword: null,
-    rating: null
+    rating: null,
+    comments: null
   };
   cleaningTypes;
   roomTypes: any[] = [];
@@ -53,12 +54,12 @@ export class CompanyProfileComponent implements OnInit {
         if (data.success) {
           this.company.comments = data.commentList;
         }
-      });
+      }));
       this.commentService.getRaiting(this.company._id).subscribe((data => {
         if (data.success) {
           this.company.rating = data.rating;
         }
-      });
+      }));
     });
     this.cleaningTypeService.getCleaningTypes().subscribe(data => {
       this.cleaningTypes = data.types;

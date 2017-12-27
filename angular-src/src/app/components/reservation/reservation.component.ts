@@ -9,6 +9,7 @@ import {RoomTypeService} from "../../services/room-type.service";
 import {CompanyService} from "../../services/company.service";
 import {Md2Dialog} from "md2";
 import {OrderService} from "../../services/order.service";
+import {FlashMessagesService} from "angular2-flash-messages";
 
 @Component({
   selector: 'app-reservation',
@@ -26,7 +27,10 @@ export class ReservationComponent implements OnInit {
     selectedType: null,
     companyId: null,
     dueDate: null,
-    time: null
+    time: null,
+    address: null,
+    regularity: null,
+    email: null
   };
   roomDescriptions: any[] = [];
 
@@ -50,13 +54,16 @@ export class ReservationComponent implements OnInit {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private companyService: CompanyService,
+    private flashMessageService: FlashMessagesService,
     private orderService: OrderService
   ) { }
 
 
   ngOnInit() {
     this.activeRoute.params.subscribe(params => {
-      this.selectedCompany = params;
+      this.selectedCompany._id = params['id'];
+      this.selectedCompany.username = params['username'];
+      this.selectedCompany.approximatePrice = params['approximatePrice'];
     });
     this.cleaningTypeService.getCleaningTypes().subscribe(data => {
       this.cleaningTypes = data.types;
@@ -70,7 +77,7 @@ export class ReservationComponent implements OnInit {
   openOrder(dialog: Md2Dialog) {
     let company = {
       companyId: this.selectedCompany._id,
-      selectedType: this.selectedType._id;
+      selectedType: this.selectedType._id,
       roomDescriptions: JSON.stringify(this.roomDescriptions)
     }
     this.companyService.getPrice(company).subscribe(data => {
@@ -101,6 +108,7 @@ export class ReservationComponent implements OnInit {
     this.orderService.order(this.order).subscribe(data => {
       if(data.success){
         dialog.close();
+        this.flashMessageService.show(data.msg, {cssClass: 'alert-success', timeout: 3000});
       } else {
         this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
       }

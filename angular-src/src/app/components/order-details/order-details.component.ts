@@ -21,7 +21,10 @@ export class OrderDetailsComponent implements OnInit {
   order ={
     cleaningTypeName: null,
     customerId: null,
-    status: null
+    status: null,
+    companyId: null,
+    _id: null,
+    email: null
   };
   rejectReason: null;
   updatedOrder = {
@@ -30,7 +33,7 @@ export class OrderDetailsComponent implements OnInit {
     companyId: null,
     status: null,
     rejectReason: null
-  }
+  };
 
 
   constructor(
@@ -81,7 +84,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   rejectOrder(dialog: Md2Dialog, rejectReason: any){
-    if (this.rejectReason !=null && this.rejectReason.length != null) {
+    if (rejectReason != null && rejectReason.length != null) {
       this.updatedOrder.status = "canceled";
       this.updatedOrder.rejectReason = rejectReason;
       this.orderService.updateOrder(this.updatedOrder).subscribe(data => {

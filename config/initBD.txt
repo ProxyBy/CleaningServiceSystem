@@ -62,6 +62,7 @@ db.users.insert(
       "password" : "$2a$10$JuScVxuJsvEPatU5cR.b9uzlBZxR21lRJrTk2LhqxW2y212I4cQw2",
       "role" : "admin",
       "status" : "active",
+      "active": "true",
       "banReason" : ""
    }]
 )

@@ -7,10 +7,10 @@ const Status = require('../config/orderStatusEnum');
 
 export class OrderController {
 
-    public order: Function = (req: Request, res: Response) => {
+    public order: Function =  (req: Request, res: Response) => {
         let dateUtills = new DateUtills();
         var order = new Order({
-               leaningTypeId: req.body.leaningTypeId,
+               cleaningTypeId: req.body.cleaningTypeId,
                cleaningTypeName: req.body.cleaningTypeName,
                roomDescriptions: req.body.roomDescriptions,
                address: req.body.address,
@@ -24,8 +24,9 @@ export class OrderController {
                status: Status.NEW,
                dates: dateUtills.getDatesFromDays(req.body.selectedDays, req.body.regularity, req.body.dueDate),
                dueDate: req.body.dueDate,
-               time: req.body.time
-           });
+               time: req.body.time,
+
+        });
            Order.addOrder(order, (err: any) => {
                if (err) {
                    res.json({success: false, msg: 'Something went wrong'});

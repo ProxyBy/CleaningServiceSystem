@@ -5,7 +5,7 @@
       <tr>
         <th></th>
         <th>Cleaning type</th>
-        <th>Date</th>
+        <th>Dates</th>
         <th>Start time</th>
         <th>Status</th>
         <th></th>
@@ -13,8 +13,8 @@
       <tr *ngFor="let order of orders" >
         <td></td>
         <td>{{order.cleaningTypeName}}</td>
-        <td>{{order.date}}</td>
-        <td>{{order.startTime}}</td>
+        <td>{{order.dates}}</td>
+        <td>{{order.time}}</td>
         <td>{{order.status}}</td>
         <td>
           <button class="btn btn-primary" (click)="show(order._id)">Show details</button>

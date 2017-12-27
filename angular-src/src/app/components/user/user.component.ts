@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
       if(data.success){
         this.users = data.users;
       } else {
-        this.flashMessageService.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        this.flashMessageService.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
       }
     })
   }

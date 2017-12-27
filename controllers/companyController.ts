@@ -25,7 +25,7 @@ export class CompanyController {
             active: true,  //TODO false and activate
             banReason: ""
         });
-        User.addUser(newCompany, (err: any, company: any) => {
+        User.addUser(newCompany, (err: any) => {
             if (err) {
                 res.json({success: false, msg: 'Fail to register cleaning company'});
             } else {
@@ -79,12 +79,14 @@ export class CompanyController {
                     parametrizedCompanies.push(parametrizedCompany);
                 }
                 for (let company of parametrizedCompanies) {
-                    console.log(criteria.dates);
+                    console.log(company);
                     await Order.getCompanyOrdersByDates(company._id, criteria.dates)
                         .then(
                             (result: any) => {
                                 if (result.length == 0){
+                                    console.log(result.length);
                                     console.log("add");
+                                    console.log(result);
                                     companyParametrizedList.push(company);
                                 }
                             },
