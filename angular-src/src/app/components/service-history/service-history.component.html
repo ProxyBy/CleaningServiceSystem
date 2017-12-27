@@ -1,0 +1,32 @@
+<div class="flex-container">
+  <form class="flex-element" name="form">
+    <table>
+      <tr>
+        <th></th>
+        <th>Cleaning type</th>
+        <th>Address/Location</th>
+        <th>Room description</th>
+        <th>Day(days)</th>
+        <th>Regularity</th>
+        <th>Time</th>
+        <th>Due date</th>
+        <th>Company</th>
+        <th>Price</th>
+        <th>Status</th>
+      </tr>
+      <tr *ngFor="let order of orders" >
+        <td></td>
+        <td>{{order.cleaningTypeName}}</td>
+        <td>{{order.address}}</td>
+        <td>{{order.roomDescriptions}}</td>
+        <td>{{order.days}}</td>
+        <td>{{order.regularity}}</td>
+        <td>{{order.time}}</td>
+        <td>{{order.dueDate}}</td>
+        <td>{{order.companyName}}</td>
+        <td>{{order.price}}</td>
+        <td>{{order.status}}</td>
+      </tr>
+    </table>
+  </form>
+</div>

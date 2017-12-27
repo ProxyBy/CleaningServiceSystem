@@ -1,0 +1,56 @@
+<div class="flex-container">
+<form class="flex-element" (submit)="onRegisterSubmit()">
+  <h2 class="page-header">Register cleaning service</h2>
+  <div class="form-group">
+    <label>Logo</label>
+    <input type="text" [(ngModel)]="logo" name="logo" class="form-control">
+    <!-- <input type="file" class="form-control" name="logo" ng2FileSelect [uploader]="logo" />-->
+    <!--    <input type="file" (change)="fileChangeEvent($event)" class="form-control" placeholder="Upload file..." />
+        <button type="button" (click)="upload()">Upload</button>-->
+    <!--  <input type="file" name="logo" id="fileToUpload" file-model="myFile" accept="image/*" class="form-control"/>-->
+  </div>
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" [(ngModel)]="name" name="name" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Description</label>
+    <input type="text" [(ngModel)]="description" name="description" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input type="text" [(ngModel)]="email" name="email" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Address</label>
+    <input type="text" [(ngModel)]="address" name="address" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Service type:</label>
+    <div *ngFor="let ser of cleaningTypes">
+      <label><input type="checkbox" (change)="addType(ser._id, $event.target.checked)" name="selectedType">{{ser.name}}</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Coefficients:</label>
+    <div *ngFor="let cleaningType of cleaningTypes">
+      <label *ngIf="isInSelectedArray(cleaningType._id)"><input type="text" (change)="addCoefficient(cleaningType._id, $event.target.value)" name="coefficient">{{cleaningType.name}}</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Prices of room types:</label>
+    <div *ngFor="let room of roomTypes">
+      <label><input type="text" (change)="addRoomPrice(room._id, $event.target.value)" name="roomPrice">{{room.name}}</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" [(ngModel)]="password" name="password" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Confirm password</label>
+    <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" class="form-control">
+  </div>
+  <input type="submit" class="btn btn-primary" value="Register">
+</form>
+</div>

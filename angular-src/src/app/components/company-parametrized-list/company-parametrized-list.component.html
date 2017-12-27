@@ -1,0 +1,86 @@
+<div class="flex-container">
+  <form class="flex-element" name="form">
+    <h2 class="page-header">Companies on request</h2>
+    <table>
+      <tr>
+        <th>Company</th>
+        <th>Logo</th>
+        <th>Address</th>
+        <th>Rating</th>
+        <th>Approximate price</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let company of companies" >
+        <td>{{company.username}}</td>
+        <td>{{company.logo}}</td>
+        <td>{{company.address}}</td>
+        <td>{{company.comment}}</td>
+        <td>{{company.approximatePrice}}</td>
+        <td>
+          <button class="btn btn-primary" (click)="openOrder(order, company._id)">Order</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+<md2-dialog #order>
+  <md2-dialog-title>Confirm you order</md2-dialog-title>
+  <div class="form-group">
+    <label>Please check you request:</label>
+    <fieldset [disabled]="true">
+
+    <div class="form-group">
+      <label>Address / Location</label>
+      <input type="text" [(ngModel)]="cleaningRequest.address" name="cleaningRequest.address" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Type of cleaning</label>
+      <input type="text" [(ngModel)]="selectedType.name" class="form-control">
+    </div>
+
+   <div class="form-group">
+      <label>Description of premises</label>
+      <div *ngFor="let roomDescription of roomDescriptions">
+        <label>{{roomDescription.name}}</label>
+        <input type="text" [(ngModel)]="roomDescription.count"  name="description" class="form-control">
+      </div>
+    </div>
+
+        <div class="form-group">
+          <label>Day / days</label>
+          <div *ngFor="let selectedDay of cleaningRequest.selectedDays">
+            <input type="text" value={{selectedDay}} class="form-control">
+          </div>
+        </div>
+         <div class="form-group">
+           <label>Planned regular cleaning</label>
+           <input type="text" [(ngModel)]="cleaningRequest.regularity"  name="regularity" class="form-control">
+         </div>
+         <div *ngIf="!authService.loggedIn()" class="form-group">
+           <label>Email or phone field to confirm the order</label>
+           <input type="text" [(ngModel)]="cleaningRequest.email" name="email" class="form-control">
+         </div>
+      <div class="form-group">
+        <label>Company</label>
+        <input type="text" [(ngModel)]="selectedCompany.username"  name="username" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Start time </label>
+        <input type="text" [(ngModel)]="cleaningRequest.time" name="cleaningRequest.time" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Due date </label>
+        <input type="text" [(ngModel)]="cleaningRequest.dueDate" name="cleaningRequest.dueDate" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Price</label>
+        <input type="text" [(ngModel)]="selectedCompany.approximatePrice"  name="username" class="form-control">
+      </div>
+      </fieldset>
+  </div>
+  <md2-dialog-footer>
+    <button  class="btn btn-primary" button="primary" (click)="confirmOrder(order)">Ok</button>
+    <button class="btn btn-dafault" button (click)="cancel(order)">Cancel</button>
+  </md2-dialog-footer>
+</md2-dialog>

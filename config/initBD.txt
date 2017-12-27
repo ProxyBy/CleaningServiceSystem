@@ -1,0 +1,68 @@
+db.users.find() - вывод всех из таблицы users
+
+// list of cleaning type
+db.cleaningtypes.insert(
+   [{
+      "_id" : 1,
+      "name" : "Standard room cleaning"
+   },
+   {
+      "_id" : 2,
+      "name" : "General cleaning"
+   },
+   {
+      "_id" : 3,
+      "name" : "Cleaning after repair and construction"
+   },
+   {
+      "_id" : 4,
+      "name" : "Dry cleaning of carpets"
+   },
+   {
+      "_id" : 5,
+      "name" : "Cleaning of offices"
+   },
+   {
+      "_id" : 6,
+      "name" : "Dry cleaning of furniture and coatings"
+   },
+   {
+      "_id" : 7,
+      "name" : "Industrial cleaning"
+   },
+   {
+      "_id" : 8,
+      "name" : "Pool cleaning"
+   }]
+)
+
+
+// list of room type
+db.roomtypes.insert(
+   [{
+      "_id" : 1,
+      "name" : "Standard room"
+   },
+   {
+      "_id" : 2,
+      "name" : "Large room"
+   },
+   {
+      "_id" : 3,
+      "name" : "WC"
+   }]
+)
+
+// add admin  pass= m
+db.users.insert(
+   [{
+      "email" : "admin@bk.ru",
+      "phone" : "000-000-0000",
+      "username" : "admin",
+      "password" : "$2a$10$JuScVxuJsvEPatU5cR.b9uzlBZxR21lRJrTk2LhqxW2y212I4cQw2",
+      "role" : "admin",
+      "status" : "active",
+      "active": "true",
+      "banReason" : ""
+   }]
+)

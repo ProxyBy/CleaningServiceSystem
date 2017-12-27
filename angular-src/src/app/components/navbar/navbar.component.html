@@ -1,0 +1,57 @@
+<header class="header">
+  <h1 class="logo">
+    <a href="#">Cleaning Service System</a>
+  </h1>
+  <ul class="main-nav">
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/']">Home</a>
+    </li>
+    <li *ngIf="authService.loggedIn() && isAvailablePage('users')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/users']">Users</a>
+    </li>
+    <li *ngIf="authService.loggedIn() && isAvailablePage('companyList')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/companyList']">Cleaning service</a>
+    </li>
+    <li *ngIf="authService.loggedIn() && isAvailablePage('serviceHistory')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/serviceHistory']">Service history</a>
+    </li>
+    <li *ngIf="!authService.loggedIn() || (authService.loggedIn() && isAvailablePage('reservation'))" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/reservation']">Reservation</a>
+    </li>
+    <li *ngIf="authService.loggedIn() && isAvailablePage('companyAvailableList')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/companyAvailableList']">Available company</a>
+    </li>
+    <li *ngIf="authService.loggedIn() && isAvailablePage('orders')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/orders']">Orders</a>
+    </li>
+    <li *ngIf="authService.loggedIn() && isAvailablePage('dashboard')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/dashboard']">Dashboard</a>
+    </li>
+  </ul>
+
+
+  <ul class="main-nav">
+    <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/login']">Login</a>
+    </li>
+    <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/register']">Register</a>
+    </li>
+    <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/companyRegister']">Register as cleaning service</a>
+    </li>
+    <li *ngIf="authService.loggedIn()">
+      <a (click)="onLogoutClick()" href="#">Logout</a>
+    </li>
+    <li *ngIf="authService.loggedIn() && isAvailablePage('profile')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/profile']">Profile</a>
+    </li>
+    <li *ngIf="authService.loggedIn() && isAvailablePage('companyProfile')" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a [routerLink]="['/companyProfile']">Profile</a>
+    </li>
+  </ul>
+</header>
+
+
+
+

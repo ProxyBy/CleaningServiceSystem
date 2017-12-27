@@ -1,0 +1,25 @@
+<div class="flex-container">
+  <form class="flex-element" name="form">
+    <h2 class="page-header">Orders</h2>
+    <table>
+      <tr>
+        <th></th>
+        <th>Cleaning type</th>
+        <th>Dates</th>
+        <th>Start time</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let order of orders" >
+        <td></td>
+        <td>{{order.cleaningTypeName}}</td>
+        <td>{{order.dates}}</td>
+        <td>{{order.time}}</td>
+        <td>{{order.status}}</td>
+        <td>
+          <button class="btn btn-primary" (click)="show(order._id)">Show details</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>

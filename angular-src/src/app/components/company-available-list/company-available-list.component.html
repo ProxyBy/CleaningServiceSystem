@@ -1,0 +1,23 @@
+<div class="flex-container">
+  <form class="flex-element" name="form">
+    <h2 class="page-header">Available company</h2>
+    <table>
+      <tr>
+        <th>Company</th>
+        <th>Logo</th>
+        <th>Address</th>
+        <th>Rating</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let company of companies" >
+        <td>{{company.username}}</td>
+        <td>{{company.logo}}</td>
+        <td>{{company.address}}</td>
+        <td>{{company.comment}}</td>
+        <td>
+          <button class="btn btn-primary" (click)="order(company._id)">Order</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>

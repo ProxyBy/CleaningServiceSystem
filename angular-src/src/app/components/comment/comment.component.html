@@ -1,0 +1,29 @@
+<div class="flex-container">
+  <form class="flex-element" (submit)="onSubmit()">
+    <h2 class="page-header">Comment</h2>
+    <div class="form-group">
+
+      <div class="rating">
+        <label>
+          <input type="radio" name="rating1" [(ngModel)]="comment.rating" value="1" title="1 stars"> 1
+        </label>
+        <label>
+          <input type="radio" name="rating2" [(ngModel)]="comment.rating" value="2" title="2 stars"> 2
+        </label>
+        <label>
+          <input type="radio" name="rating3" [(ngModel)]="comment.rating" value="3" title="3 stars"> 3
+        </label>
+        <label>
+          <input type="radio" name="rating4" [(ngModel)]="comment.rating" value="4" title="4 stars"> 4
+        </label>
+        <label>
+          <input type="radio" name="rating5" [(ngModel)]="comment.rating" value="5" title="5 star"> 5
+        </label>
+      </div>
+      <textarea rows="4" cols="50" name="text" [(ngModel)]="comment.text"></textarea>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Send">
+  </form>
+</div>
+
+
